@@ -12,81 +12,92 @@
 </head>
 
 <body style="background-color:Gainsboro;">
-<div id="main-body">
-<header>
-<div>
-<h4>UTD degree planning and audit tool</h4>
-</div>       
-</header>
-
-<nav>                     
-                
-<ul class="nav-links">
-  <li><a href="main.html">Home</a></li>  
-  <li><a href="admin.html">Admin</a></li>
-</ul>
-
-</nav>
-
-<div class="row">
-  <div class="column side">
-</div>
-
-  <div class="column middle" style ="align-items: center" >
-
-<form id="userForm">
-  <div class="input-group">
-  <br><br>
-  <!--<label for="fname">Student Name:</label>-->
-    <input type="text" placeholder="Student Name" id="sname">		
+  <div id="main-body">
+    <!--DOCUMENT HEADER-->
+    <header>
+      <div>
+        <h4>UTD degree planning and audit tool</h4>
+      </div>       
+    </header>
+    <!--NAVIGATION BAR-->
+    <nav>                                     
+      <ul class="nav-links">
+        <li><a href="main.html">Home</a></li>  
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+    <!--BODY CONTENT-->
+    <div class="row">
+      <div class="column side">
+      </div>
+      <div class="column middle">
+        <form id="userForm">
+          <div class="input-group">
+            <br><br>
+            <input type="text" placeholder="Student Name" id="sname">		
+          </div>
+          <div class="input-group">
+            <input type="text" placeholder="Student ID" id="sid" maxlength="10">
+          </div>
+          <div class="input-group">
+            <label for="Dtrack">Degree Track</label>
+            <select name="degree track" id="dtrack"></select>
+          </div>
+          <div>
+            <label for="Anticipated Graduation">Anticipated Graduation</label>
+            <select name="anticipated graduation year" id="antigrad_y"></select>
+            <select name="anticipated graduation semester" id="antigrad_s"></select>  
+          </div> 
+          <br>
+          <input type="submit" style="background-color: #e87500; border: 1px solid; border-radius: 5 px; color: white; display: inline-block; text-align: center; width: 200px; font-weight: bold;
+          font-family: 'Poppins', sans-serif; height: 30px" value="Next" />
+        </form>
+      </div>
+      <div class="column side">
+      </div>
+      <div class="footer">
+      </div>
+    </div>
   </div>
-	  
-  <div class="input-group">
-    <input type="text" placeholder="Student ID" id="sid">
-  </div>
-  
-  <div class="input-group">
-<label for="Dtrack">Degree Track</label>
-
-<select name="degree track" id="dtrack">
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-</select>
-  </div>
-
-  <div >
-  <form action="/action_page.php">
-  <label for="Anticipated Graduation">Anticipated Graduation</label>
-  <input type="date" id="graduation" name="graduation">
-</form>        
-  </div> 
-  <br>
-   <input type="submit" style="background-color: #e87500; border: 1px solid; border-radius: 5 px; color: white; display: inline-block; text-align: center; width: 200px; font-weight: bold;
-font-family: 'Poppins', sans-serif; height: 30px" value="Next" />
-   
-    </form>
-
-</div>
-
-  <div class="column side">
-
-</div>
-
-<div class="footer">
- 
-</div>
-</div>
-</div>
 </body>
 <script>
+  //Below Script is primarily for page load
+  //after the database has been read from.
   let db_handler = new DBInfo();
   document.getElementById("main-body").style.opacity = 0.0;
+  function postDB_pageUpdate(){
+    var degreeSelect = document.getElementById("dtrack");
+    var iter = 0;
+    for(const item in db_handler.getDegreeTracks()){
+      var degreeTrackName = db_handler.getDegreeTracks()[iter].name;
+      var option = document.createElement("option");
+      option.value = (iter+1);
+      option.innerHTML = degreeTrackName;
+      degreeSelect.appendChild(option);
+      iter++;
+    }
+    var antic_grad_yr = document.getElementById("antigrad_y");
+    for(let i = -10; i < 10; i++){
+      var year = new Date().getFullYear() + i;
+      var option = document.createElement("option");
+      option.value = year;
+      option.innerHTML = year;
+      if(i==0){option.selected = "selected";}
+      antic_grad_yr.appendChild(option);
+    }
+    var falloption = document.createElement("option");
+    falloption.innerHTML = "Fall";
+    falloption.value = "F";
+    var spoption = document.createElement("option");
+    spoption.innerHTML = "Spring";
+    spoption.value = "S";
+    document.getElementById("antigrad_s").appendChild(falloption);
+    document.getElementById("antigrad_s").appendChild(spoption);
+  }
   async function start_page(){
-    await requestCourses(db_handler.getCourseList());
     await requestDegreeTracks(db_handler.getDegreeTracks());
-    //Update the HTML stuff a bit
+    await requestCourses(db_handler.getCourseList());
+    postDB_pageUpdate();
     document.getElementById("main-body").style.opacity = 1.0;
     console.log(db_handler.getCourseList());
     console.log(db_handler.getDegreeTracks());

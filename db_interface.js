@@ -73,10 +73,12 @@ function requestDegreeTracks(degrees){
             const xhttp = new XMLHttpRequest();
             xhttp.onload = function(){
                 if(xhttp.responseText == "DONE"){
+                    degrees.sort(function(a, b){return a.id - b.id});
                     resolve();
                 }else{
                     let JSON_obj = JSON.parse(xhttp.responseText);
                     degrees.push(JSON_obj);
+                    degrees.sort(function(a, b){return a.id - b.id});
                     retrievals += 1;
                 }
             }
