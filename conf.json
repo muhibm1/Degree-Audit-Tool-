@@ -1,0 +1,281 @@
+{
+    "DEGREE_TRACKS":[{
+        "id":"datasciences",
+        "name":"Data Sciences Track",
+        "prereqs":["cs2340", "cs5303", "cs5333", "cs5343", "cs5348", "cs3341"],
+        "required":["cs6313", "cs6350", "cs6363", "cs6375", "cs6301", "cs6320", "cs6327", "cs6347", "cs6360"]
+    },{
+        "id":"cybersecurity",
+        "name":"Cyber Security Track",
+        "prereqs":["cs2340", "cs5303", "cs5333", "cs5343", "cs5348", "cs5390"],
+        "required":["cs6324", "cs6363", "cs6378", "cs6332", "cs6348", "cs6349", "cs6377"]
+    },{
+        "id":"telecommunications",
+        "name":"Networks and Telecommunications Track",
+        "prereqs":["cs2340", "cs5303", "cs5333", "cs5343", "cs5348", "cs3341", "cs5390"],
+        "required":["cs6352", "cs6363", "cs6378", "cs6385", "cs6390"]
+    },{
+        "id":"traditional",
+        "name":"Traditional Computer Science Track",
+        "prereqs":["cs2340", "cs5303", "cs5333", "cs5343", "cs5348", "cs5349", "cs5390"],
+        "required":["cs6363", "cs6378", "cs6390", "cs6353", "cs6360", "cs6371"]
+    },{
+        "id":"intelligent",
+        "name":"Intelligent Systems Track",
+        "prereqs":["cs2340", "cs5303", "cs5333", "cs5343", "cs5348"],
+        "required":["cs6320", "cs6363", "cs6364", "cs6375", "cs6360", "cs6378"]
+    },{
+        "id":"interactive",
+        "name":"Interactive Computing Track",
+        "prereqs":["cs2340", "cs5303", "cs5333", "cs5343", "cs5348"],
+        "required":["cs6326", "cs6363", "cs6323", "cs6328", "cs6331", "cs6334", "cs6366"]
+    },{
+        "id":"systems",
+        "name":"Systems Track",
+        "prereqs":["cs2340", "cs5303", "cs5333", "cs5343", "cs5348"],
+        "required":["cs6304", "cs6363", "cs6378", "cs6396", "cs6349", "cs6376", "cs6380", "cs6397"]
+    }],
+
+    "COURSES":[{
+        "name":"Computer Science I",
+        "course_no":"CS5303"
+    },{
+        "name":"Computer Science II",
+        "course_no":"CS5330"
+    },{
+        "name":"Discrete Structures",
+        "course_no":"CS5333"
+    },{
+        "name":"Algorithm Analysis and Data Structures",
+        "course_no":"CS5343"
+    },{
+        "name":"Operating Systems Concepts",
+        "course_no":"CS5348"
+    },{
+        "name":"Probability and Statistics in Computer Science and Software Engineering",
+        "course_no":"CS3341"
+    },{
+        "name":"Computer Networks",
+        "course_no":"CS5390"
+    },{
+        "name":"Software Engineering",
+        "course_no":"SE5354"
+    },{
+        "name":"Automata Theory",
+        "course_no":"CS5349"
+    },{
+        "name":"Statistical Methods for Data Science",
+        "course_no":"CS6313"
+    },{
+        "name":"Big Data Management and Analytics",
+        "course_no":"CS6350"
+    },{
+        "name":"Design and Analysis of Computer Algorithms",
+        "course_no":"CS6363"
+    },{
+        "name":"Machine Learning",
+        "course_no":"CS6375"
+    },{
+        "name":"Special Topics in Computer Science",
+        "course_no":"CS6301"
+    },{
+        "name":"Natural Language Processing",
+        "course_no":"CS6320"
+    },{
+        "name":"Video Analytics",
+        "course_no":"CS6327"
+    },{
+        "name":"Statistical Methods in AI and Machine Learning",
+        "course_no":"CS6347"
+    },{
+        "name":"Database Design",
+        "course_no":"CS6360"
+    },{
+        "name":"Information Security",
+        "course_no":"CS6324"
+    },{
+        "name":"Advanced Operating Systems",
+        "course_no":"CS6378"
+    },{
+        "name":"Systems Security and Malicious Code Analysis",
+        "course_no":"CS6348"
+    },{
+        "name":"Data and Applications Security",
+        "course_no":"CS6348"
+    },{
+        "name":"Network Security",
+        "course_no":"CS6349"
+    },{
+        "name":"Introduction to Cryptography",
+        "course_no":"CS6377"
+    },{
+        "name":"Artificial Intelligence",
+        "course_no":"CS6364"
+    },{
+        "name":"Human Computer Interactions",
+        "course_no":"CS6326"
+    },{
+        "name":"Computer Animation and Gaming",
+        "course_no":"CS6326"
+    },{
+        "name":"Modeling and Simulation",
+        "course_no":"CS6328"
+    },{
+        "name":"Multimedia Systems",
+        "course_no":"CS6331"
+    },{
+        "name":"Virtual Reality",
+        "course_no":"CS6334"
+    },{
+        "name":"Computer Graphics",
+        "course_no":"CS6366"
+    },{
+        "name":"Performance of Computer Systems and Networks",
+        "course_no":"CS6352"
+    },{
+        "name":"Algorithmic Aspects of Telecommunication Networks",
+        "course_no":"CS6385"
+    },{
+        "name":"Advanced Computer Networks",
+        "course_no":"CS6390"
+    },{
+        "name":"Computer Architecture",
+        "course_no":"CS6304"
+    },{
+        "name":"Real-Time Systems",
+        "course_no":"CS6396"
+    },{
+        "name":"Parallel Processing",
+        "course_no":"CS6376"
+    },{
+        "name":"Distributed Computing",
+        "course_no":"CS6380"
+    },{
+        "name":"Synthesis and Optimization of High-Performance Systems",
+        "course_no":"CS6397"
+    },{
+        "name":"Compiler Construction",
+        "course_no":"CS6353"
+    },{
+        "name":"Advanced Programming Languages",
+        "course_no":"CS6371"
+    },{
+        "name":"Advanced Digital Logic",
+        "course_no":"CE6301"
+    },{
+        "name":"Recent Advances in Computing",
+        "course_no":"CS7301"
+    },{
+        "name":"Embedded Computer Systems",
+        "course_no":"CS4397"
+    },{
+        "name":"Digital Forensics",
+        "course_no":"CS4398"
+    },{
+        "name":"Principles of UNIX",
+        "course_no":"CS5375"
+    },{
+        "name":"Special Topics in Computer Science",
+        "course_no":"CS5V81"
+    },{
+        "name":"Cyber Security Essentials for Practicioners",
+        "course_no":"CS6303"
+    },{
+        "name":"Data Security and Privacy for Practicioners",
+        "course_no":"CS6305"
+    },{
+        "name":"Cyber Security Analytics & Malware Analysis for Practitioners",
+        "course_no":"CS6306"
+    },{
+        "name":"Cyber Physical Systems and Critical Infrastructure Security for Practitioners",
+        "course_no":"CS6308"
+    },{
+        "name":"Web Programming Languages",
+        "course_no":"CS6314"
+    },{
+        "name":"Semantic Web",
+        "course_no":"CS6315"
+    },{
+        "name":"Computational Geometry",
+        "course_no":"CS6319"
+    },{
+        "name":"Discourse Processing",
+        "course_no":"CS6321"
+    },{
+        "name":"Information Retrieval",
+        "course_no":"CS6322"
+    },{
+        "name":"Wireless Networks",
+        "course_no":"CS6340"
+    },{
+        "name":"Cloud Computing",
+        "course_no":"CS6343"
+    },{
+        "name":"Data Representations",
+        "course_no":"CS6344"
+    },{
+        "name":"Introduction to Multicore Programming",
+        "course_no":"CS6346"
+    },{
+        "name":"Software Maintenance, Evolution, and Re-Engineering",
+        "course_no":"CS6356"
+    },{
+        "name":"Object-Oriented Analysis and Design",
+        "course_no":"CS6359"
+    },{
+        "name":"Advanced Requirements Engineering",
+        "course_no":"CS6361"
+    },{
+        "name":"Software Testing, Validation and Verification",
+        "course_no":"CS6367"
+    },{
+        "name":"Telecommunication Network Management",
+        "course_no":"CS6368"
+    },{
+        "name":"Intelligent Systems",
+        "course_no":"CS6373"
+    },{
+        "name":"Computational Logic",
+        "course_no":"CS6374"
+    },{
+        "name":"Combinatorics and Graph Algorithms",
+        "course_no":"CS6381"
+    },{
+        "name":"Theory of Computation",
+        "course_no":"CS6382"
+    },{
+        "name":"Computer Vision",
+        "course_no":"CS6384"
+    },{
+        "name":"Telecommunication Software Design",
+        "course_no":"CS6386"
+    },{
+        "name":"Optical Networks",
+        "course_no":"CS6391"
+    },{
+        "name":"Mobile Computing Systems",
+        "course_no":"CS6392"
+    },{
+        "name":"Independent Study in Computer Science",
+        "course_no":"CS6V81"
+    },{
+        "name":"Thesis",
+        "course_no":"CS6V98"
+    },{
+        "name":"Topics in Computer Science",
+        "course_no":"CS8V02"
+    },{
+        "name":"Research",
+        "course_no":"CS8V07"
+    },{
+        "name":"Dissertation",
+        "course_no":"CS8V99"
+    },{
+        "name":"Topics in Computer Science",
+        "course_no":"CS5302"
+    }],
+    "REQUIREMENTS":{
+        "gpa":"3.0",
+        "extra_elective_gpa":"3.19"
+    }
+}
