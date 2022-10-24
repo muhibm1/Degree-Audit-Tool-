@@ -44,6 +44,9 @@
             <select name="degree track" id="dtrack"></select>
           </div>
           <div>
+            <label for="Semester Admitted">Semester Admitted</label>
+            <select name="admit sem year" id="admit_y"></select>
+            <select name="admit sem semester" id="admit_s"></select>  
             <label for="Anticipated Graduation">Anticipated Graduation</label>
             <select name="anticipated graduation year" id="antigrad_y"></select>
             <select name="anticipated graduation semester" id="antigrad_s"></select>  
@@ -85,6 +88,23 @@
       if(i==0){option.selected = "selected";}
       antic_grad_yr.appendChild(option);
     }
+    var antic_grad_yr = document.getElementById("admit_y");
+    for(let i = -20; i < 1; i++){
+      var year = new Date().getFullYear() + i;
+      var option = document.createElement("option");
+      option.value = year;
+      option.innerHTML = year;
+      if(i==-4){option.selected = "selected";}
+      antic_grad_yr.appendChild(option);
+    }
+    var falloption = document.createElement("option");
+    falloption.innerHTML = "Fall";
+    falloption.value = "F";
+    var spoption = document.createElement("option");
+    spoption.innerHTML = "Spring";
+    spoption.value = "S";
+    document.getElementById("admit_s").appendChild(falloption);
+    document.getElementById("admit_s").appendChild(spoption);
     var falloption = document.createElement("option");
     falloption.innerHTML = "Fall";
     falloption.value = "F";
