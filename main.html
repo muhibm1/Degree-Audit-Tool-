@@ -117,10 +117,12 @@
   async function start_page(){
     await requestDegreeTracks(db_handler.getDegreeTracks());
     await requestCourses(db_handler.getCourseList());
+    await requestGraduationRequirements(db_handler.getRequirements());
     postDB_pageUpdate();
     document.getElementById("main-body").style.opacity = 1.0;
     console.log(db_handler.getCourseList());
     console.log(db_handler.getDegreeTracks());
+    console.log(db_handler.getRequirements());
   }
   start_page();
 </script>

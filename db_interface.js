@@ -2,8 +2,18 @@
 class DBInfo {
     constructor(){
         this.courses = [];
+        // Courses are in the form [{couseID:"CSXXXX", name:"COURSENAME"}, {couseID:"CSXXXX", name:"COURSENAME"}, ...]
         this.degrees = [];
-        this.err_code = 0;
+        // Degree tracks are in the form[
+        // {id:INT, name:"TRACKNAME", level_courses:["CSXXXX", "CSXXXX", ...], req_courses:["CSXXXX", "CSXXXX", ...]},
+        // {id:INT, name:"TRACKNAME", level_courses:["CSXXXX", "CSXXXX", ...], req_courses:["CSXXXX", "CSXXXX", ...]},
+        // ...
+        // ]
+        this.requirements = [];
+        // Requirements are in the form [
+        // {requirement_name:"Base GPA Requirement", requirement_gpa:"3.190"},
+        // {requirement_name:"Extra Elective Needed", requirement_gpa:"3.000"}, 
+        // ]
     }
 
     getCourseList(){
@@ -14,22 +24,8 @@ class DBInfo {
         return this.degrees;
     }
 
-    setErrCode(code) {
-        this.err_code = code;
-    }
-
-    getErrCode(){
-        return this.err_code;
-    }
-
-    getErrStr(){
-        var str = "";
-        switch (err_code) {
-            case 0: str = "None"; break;
-            case 1: str = "Connection Timeout"; break;
-            case 2: str = "Unable to read from Database"; break;
-        }
-        return str;
+    getRequirements(){
+        return this.requirements;
     }
 }
 
@@ -49,18 +45,6 @@ function requestCourses(courses){
         xhttp.open("GET", "reqcourses.php");
         xhttp.send();
     });
-    /*const xhttp = new XMLHttpRequest();
-    xhttp.onload = function(){
-        c_arr = JSON.parse(xhttp.responseText);
-        for(item in c_arr){
-            courses.push(c_arr[item]);
-        }
-        console.log(JSON.parse(xhttp.responseText));
-        console.log(courses);
-        Req_ST += 1;
-    }
-    xhttp.open("GET", "reqcourses.php");
-    xhttp.send();*/
 }
 
 function requestDegreeTracks(degrees){
@@ -89,74 +73,22 @@ function requestDegreeTracks(degrees){
             }
         }
     });
-    /*let fetching = true;
-    let id = 1;
-    while (fetching){
+}
+
+function requestGraduationRequirements(requirements){
+    return new Promise(function(resolve, reject){
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function(){
-            if(xhttp.responseText == "DONE"){
-                fetching = false;
-            }else{
-                console.log(xhttp.responseText);
-                let JSON_obj = JSON.parse(xhttp.responseText);
-                console.log(JSON_obj);
-                degrees.push(JSON_obj);
-                Req_ST += 1;
+            c_arr = JSON.parse(xhttp.responseText);
+            for(item in c_arr){
+                requirements.push(c_arr[item]);
             }
+            resolve();
         }
-        xhttp.open("GET", "reqtracks.php?s="+id);
+        xhttp.onerror = function(){
+            reject();
+        }
+        xhttp.open("GET", "reqrequirements.php");
         xhttp.send();
-        id += 1;
-        if(id >= 50){
-            fetching = false;
-        }
-    }*/
-}
-
-class DegreeTrack {
-    constructor(id, name){
-        this.id = id;
-        this.name = name;
-        this.level_courses = [];
-        this.required_courses = [];
-    }
-
-    getTrackID() {
-        return this.id;
-    }
-
-    getTrackName() {
-        return this.name;
-    }
-
-    getLevelCourses() {
-        return this.level_courses;
-    }
-
-    getRequiredCourses() {
-        return this.required_courses;
-    }
-
-    addLevelCourse(course) {
-        this.level_courses.push(course);
-    }
-
-    addRequiredCourse(course) {
-        this.required_courses.push(course);
-    }
-}
-
-class Course {
-    constructor(courseID, name){
-        this.courseID = courseID;
-        this.name = name;
-    }
-
-    getName(){
-        return this.name;
-    }
-
-    getCourseID(){
-        return this.courseID;
-    }
+    });
 }
