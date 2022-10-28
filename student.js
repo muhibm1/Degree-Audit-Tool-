@@ -1,22 +1,24 @@
 class Student {
     constructor(name, sid, anticipated_grad, admitted_sem){
-        this.name = name;
-        this.sid = sid;
-        this.anticipated_grad = anticipated_grad;
-        this.admitted_sem = admitted_sem;
-        this.courses_taken = [];
-        this.course_grades = [];
-        this.course_attributes = [];
-        this.level_taken = [];
-        this.level_grades = [];
-        this.level_attributes = [];
-        this.core_taken = [];
-        this.core_grades = [];
-        this.core_attributes = [];
-        this.electives_taken = [];
-        this.elective_grades = [];
-        this.elective_attributes = [];
-        this.thesis = false;
+        this.name = name; //String
+        this.sid = sid; //String
+        this.anticipated_grad = anticipated_grad; //String
+        this.admitted_sem = admitted_sem; //String
+        this.courses_taken = []; //List of Strings in the format "CSXXXX"
+        this.course_grades = []; //List of floating-point decimals
+        this.course_attributes = []; //List of Integers
+            //Attribute References: 0=Taken at UTD, Standard; 1=Waived; 2=Transfered; 3=Pass in P/F
+        this.course_semesters = [];  //List of Strings in the format "YYYYS or YYYYF"
+        this.level_taken = [];  //List of Strings in the format "CSXXXX"
+        this.level_grades = []; //List of floating-point decimals
+        this.level_attributes = []; //List of Integers
+        this.core_taken = []; //List of Strings in the format "CSXXXX"
+        this.core_grades = []; //List of floating-point decimals
+        this.core_attributes = []; //List of Integers
+        this.electives_taken = []; //List of Strings in the format "CSXXXX"
+        this.elective_grades = []; //List of floating-point decimals
+        this.elective_attributes = []; //List of Integers
+        this.thesis = false; 
         this.total_GPA = 0.000;
         this.core_GPA = 0.000;
         this.elective_GPA = 0.000;
@@ -30,6 +32,7 @@ class Student {
     getCoursesTaken(){ return this.courses_taken; }
     getCourseGrades(){ return this.course_grades; }
     getCourseAttributes(){ return this.course_attributes; }
+    getCourseSemesters() { return this.course_semesters; }
     getLevelCoursesTaken(){ return this.level_taken; }
     getLevelCourseGrades(){ return this.level_grades; }
     getLevelCourseAttributes(){ return this.level_attributes; }
@@ -52,6 +55,7 @@ class Student {
     addCourseTaken(course){ this.courses_taken.push(course); }
     addCourseGrade(grade){ this.course_grades.push(grade); }
     addCourseAttribute(att){ this.course_attributes.push(att); }
+    addCourseSemester(sem){ this.course_semesters.push(sem); }
     addLevelCourseTaken(course){ this.level_taken.push(course); }
     addLevelCourseGrade(grade){ this.level_grades.push(grade); }
     addLevelCourseAttribute(att){ this.level_attributes.push(att); }
