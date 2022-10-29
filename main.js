@@ -20,10 +20,9 @@ start_page();
 // Show a loading screen while this process is happening.
 // It should auto-populate all of the student information and return to form 1.
 function parseTranscript(){
-    //TODO:
-    // - Show Loading Screen
-    // - Parse transcript and populate student
-    // - Clear Loading Screen
+    showLoading();
+    // TODO: Parse transcript and populate student
+    hideLoading();
 }
 
 // --to_form_two():--
@@ -45,10 +44,10 @@ function to_form_three(){
 // This calls all the functions to calculate information and generate the PDFs.
 // This will transition over to the PDF viewer form of main.html once finished.
 function submit_student_info(){
-    //TODO: Show Loading Screen
+    showLoading();
     performCalculations();
     generatePDFs();
-    //TODO: Clear Loading Screen
+    hideLoading();
     //TODO: Transition to PDF Viewer
 }
 
@@ -123,8 +122,25 @@ async function start_page(){
     await requestCourses(db_handler.getCourseList());
     await requestGraduationRequirements(db_handler.getRequirements());
     postDB_pageUpdate();
+    hideLoading();
     document.getElementById("main-body").style.opacity = 1.0;
     console.log(db_handler.getCourseList());
     console.log(db_handler.getDegreeTracks());
     console.log(db_handler.getRequirements());
+}
+
+// --showLoading():--
+// Show the loading wheel
+function showLoading(){
+    loading = document.getElementById("loading");
+    loading.style.zIndex = 1;
+    loading.style.opacity = 1.0;
+}
+
+// --hideLoading():--
+// Hide the loading wheel
+function hideLoading(){
+    loading = document.getElementById("loading");
+    loading.style.zIndex = -2;
+    loading.style.opacity = 0.0;
 }
