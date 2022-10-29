@@ -15,6 +15,17 @@ let student = new Student();
 document.getElementById("main-body").style.opacity = 0.0;
 start_page();
 
+// --parseTranscript():--
+// This function is called when a transcript is uploaded on form 1.
+// Show a loading screen while this process is happening.
+// It should auto-populate all of the student information and return to form 1.
+function parseTranscript(){
+    //TODO:
+    // - Show Loading Screen
+    // - Parse transcript and populate student
+    // - Clear Loading Screen
+}
+
 // --to_form_two():--
 // This function is called when the "next" button on form 1 is pushed.
 // It performs the transition to form 2.
@@ -34,10 +45,11 @@ function to_form_three(){
 // This calls all the functions to calculate information and generate the PDFs.
 // This will transition over to the PDF viewer form of main.html once finished.
 function submit_student_info(){
-    //TODO: Clear main and show loading
+    //TODO: Show Loading Screen
     performCalculations();
     generatePDFs();
-    //TODO: transition to PDF viewer form
+    //TODO: Clear Loading Screen
+    //TODO: Transition to PDF Viewer
 }
 
 // --performCalculations():--
