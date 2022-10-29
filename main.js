@@ -144,3 +144,34 @@ function hideLoading(){
     loading.style.zIndex = -2;
     loading.style.opacity = 0.0;
 }
+
+// When a transcript is uploaded, 
+document.getElementById("fileupload").addEventListener("change", function(event){
+    showLoading();
+    var file = event.target.files[0];
+    var filereader = new FileReader();
+    filereader.onload = async function(){
+        const buff8Arr = new Uint8Array(this.result);
+        const task = pdfjsLib.getDocument(buff8Arr);
+        var returntask = await task.promise.then(function(pdf) { // get all pages text
+            var maxPages = pdf.numPages;
+            var countPromises = []; // collecting all page promises
+            for (var j = 1; j <= maxPages; j++) {
+              var page = pdf.getPage(j);
+              countPromises.push(page.then(function(page) { // add page promise
+                var textContent = page.getTextContent();
+                return textContent.then(function(text){ // return content promise
+                  return text.items.map(function (s) { return s.str; }).join(''); // value page text 
+                });
+              }));
+            }
+            // Wait for all pages and join text
+            return Promise.all(countPromises).then(function (texts) {
+              return texts.join(' ');
+            });
+          });
+        hideLoading();
+        student = parseText(returntask);
+    }
+    filereader.readAsArrayBuffer(file);
+});
