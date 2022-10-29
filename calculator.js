@@ -1,80 +1,90 @@
 
 
 
+
 class GPA_Calculator extends Student{
-    constructor(name, sid, anticipated_grad, admitted_sem){
-        super(name, sid, anticipated_grad, admitted_sem);
+    constructor(){
+        this.outstanding_req = "";
+    }
+    //get the list of outstanding required core courses
+    getOutStaningRequirements(){
+        return this.outstanding_req;
     }
 
-    calculateGPA(){
-        var totalGPA = 0.000;
-        var coreGPA = 0.000;
-        var electiveGPA = 0.000;
-        var credits = 0;
-        var coreCredits = 0;
-        var electiveCredits = 0;
-        const  minimum_core_gpa = 3.19;
-        const minimum_elective_gpa = 3.0;
-        const minimum_total_gpa = minimum_elective_gpa;
-        var number_of_P =0;
-        var number_of_F =0;
-        course_grades = this.getCourseGrades();
-        course_attributes = this.getCourseAttributes();
-        core_grades = this.getCoreCourseGrades();
-        core_attributes = this.getCoreCourseAttributes();
-        elective_grades = this.getElectiveCourseGrades();
-        elective_attributes = this.getElectiveCourseAttributes();
-        
-        //need to see what track the student is on and figure out how many class the student needs to take
+    //gets the core gpa
+    getCoreGPA(){
+        return this.core_GPA;
+    }
 
-        //need to see how to recognoze and deal with Ps and Fs
-
-        for(var i = 0; i < course_grades.length; i++){
-            //still need to calculate GPA with just passes and fails
-            if(course_attributes[i] == "Core"){
-                coreGPA += course_grades[i];
-                coreCredits++;
-            }
-            //still need to calculate GPA with just passes and fails
-            else if(course_attributes[i] == "Elective"){
-                electiveGPA += course_grades[i];                                                                                                                                
-                electiveCredits++;
-            }
-            totalGPA += course_grades[i];
-            credits++;
-        }
-
-        totalGPA /= credits;
-        coreGPA /= coreCredits;
-        electiveGPA /= electiveCredits;
-        
-        //check to see if the student needs to take antoher core course
-        if(coreGPA < minimum_core_gpa){
+    calculate_core_GPA(courses_taken,core_grades,core_attributes){
+        // Calculate the core GPA
+        var core_GPA = 0.000;
+        var core_classes = 0;
+        for(var i = 0; i < courses_taken.length; i++){
             
+            if(core_attributes[i] == "0"){
+                core_GPA = core_GPA + core_grades[i];
+                core_classes++;
+            }
         }
-        //check to see if the student needs to take antoher elective course
-        if(electiveGPA < minimum_elective_gpa){
-
+        var core_GPA = core_GPA / core_classes;
+        return this.core_GPA;
+    }
+    calculate_elective_GPA(electives_taken,elective_grades,elective_attributes){
+        // Calculate the elective GPA
+        var elective_GPA = 0.000;
+        var elective_classes = 0;
+        for(var i = 0; i < electives_taken.length; i++){
+             
+            if(elective_attributes[i] == "0"){
+                elective_GPA = elective_GPA + elective_grades[i];
+                elective_classes++;
+            }
         }
-        //checks to see if the student needs to take another course to meet the minimum total gpa
-        if(totalGPA < minimum_total_gpa){
-
-        }
-
-        //needs to make check if all class are C+ or higher (some professsor might not follow thw grade ranges for letter grades)
-
-        //needs to see how many class that need to be taken
-
+        var elective_GPA = elective_GPA / elective_classes;
+        return elective_GPA;
+    }
+  
+    calculate_total_GPA(){
+        // Calculate the total GPA
+        var core_gpa = this.calculate_core_GPA();
+        var elective_gpa = this.calculate_elective_GPA();
+        var total_gpa = (core_gpa + elective_gpa) / 2;
+        return total_gpa;
+    }
     
+    incomplete_requirements(total_required_courses,core_taken,core_attributes ){
+        // Check if the student has completed all requirements
+        //to see if there are any F's in the list of cores taken
+        //pull it out of the list of cores taken
+        //compare the list of all required classes to the list of cores taken
+        // output the list of classes that are not in the list of required cores
+        //calculate minium gpa for the class inorder to maintain the overall core gpa
+        
+        for(var i = 0; i < core_taken.length; i++){
+            if(core_attributes[i] == 0){
+                core_taken.splice(i,1);
+            }
+        }
 
-        this.total_GPA = totalGPA;
-        this.core_GPA = coreGPA;
-        this.elective_GPA = electiveGPA;
-        this.credits = credits;
+        
+
+        let difference = total_required_courses.filter(x => !core_taken.includes(x));
+
+        this.outstanding_req = difference;
+        var core_gpa = this.getCoreGPA();
+
+        for(var i = 0; i < courses_taken.length; i++){
+            this.count_core_classes = 0;
+            if(core_attributes[i] == "0"){
+                this.count_core_classes++;
+            }
+        }
+        this.min_gpa = ((3.19 * (this.count_core_classes + difference.length)) - (core_gpa * this.count_core_classes))/ difference.length; 
+
+        
+        //return this.outstanding_req;
+        return ("The student needs a GPA of" + this.min_gpa + "in" + this.outstanding_req + " to maintain a 3.19 core GPA");
     }
 
-    getTotalGPA(){ return this.total_GPA; }
-    getCoreGPA(){ return this.core_GPA; }
-    getElectiveGPA(){ return this.elective_GPA; }
-    getCredits(){ return this.credits; }
 }
