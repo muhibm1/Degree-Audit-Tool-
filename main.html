@@ -8,7 +8,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 <meta htto-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" type="text/css" href="external.css"> 
+<script src="pdf.js"></script>
+<script> pdfjsLib.GlobalWorkerOptions.workerSrc = "pdf.worker.js";</script>
 <script src="db_interface.js"></script>
+<script src="transcriptparser.js"></script>
+<script src="student.js"></script>
+<script src="calculator.js"></script>
+<script src="pdf_generator.js"></script>
 </head>
 
 <body style="background-color:Gainsboro;">
@@ -27,9 +33,20 @@
       </ul>
     </nav>
     <!--BODY CONTENT-->
-    <div class="row">
-      <div class="column side">
+
+    <!-- === FORM ONE === -->
+    <!--  * Student Name -->
+    <!--  * Student ID -->
+    <!--  * Degree Track -->
+    <!--  * Semester Admitted -->
+    <!--  * Anticipated Graduation -->
+    <!--  * Upload Transcript (optional) -->
+    <div class="formOne">
+      <div class="input-group">
+        <br><br>
+        <input type="text" placeholder="Student Name" id="sname" autocomplete="off">		
       </div>
+<<<<<<< HEAD
       <div class="column middle">
         <form id="userForm">
           <div class="input-group">
@@ -60,76 +77,65 @@
             <input type="submit" style="background-color: #e87500; border: 1px solid; border-radius: 5 px; color: white; display: inline-block; text-align: center; width: 200px; font-weight: bold;
           font-family: 'Poppins', sans-serif; height: 30px" value="Next" />
             </form>
+=======
+      <div class="input-group">
+        <input type="text" placeholder="Student ID" id="sid" maxlength="10" autocomplete="off">
+>>>>>>> 7dc6899aee4a8ea36dba257614382165c6813fc9
       </div>
-      <div class="column side">
+      <div class="input-group">
+        <label for="Dtrack">Degree Track</label>
+        <select name="degree track" id="dtrack" style="width: 100%"></select>
       </div>
-      <div class="footer">
+      <div class="input-group">
+        <label for="Semester Admitted">Semester Admitted</label>
+        <select name="admit sem year" id="admit_y" style="width: 50%"></select>
+        <select name="admit sem semester" id="admit_s" style="width: 50%"></select>  
       </div>
+      <div class="input-group">
+        <label for="Anticipated Graduation">Anticipated Graduation</label>
+        <select name="anticipated graduation year" id="antigrad_y" style="width: 50%"></select>
+        <select name="anticipated graduation semester" id="antigrad_s" style="width: 50%"></select>
+      </div>  
+      <div class="input-group">
+        <label>Student Transcript:</label>
+        <input id="fileupload" type="file" autocomplete="off">
+      </div>    
+      <br>
+      <button class="next_button">Next</button>
+    </div>
+
+    <!-- === FORM TWO === -->
+    <!--  * Back Button (to form 1) -->
+    <!--  * Thesis (check box) -->
+    <!--  * Level Courses & Level Courses D&D-->
+    <!--  * Required Courses & Required Courses D&D-->
+    <!--  * Elective Courses Manual Entry -->
+    <!--  * Other Requirements Manual Entry -->
+    <div class="formTwo">
+      <!-- TODO -->
+    </div>
+
+    <!-- === FORM THREE === -->
+    <!--  * Entry Table -->
+    <!--   ~ Column 1: Course (Not Editable) (From previous form)  -->
+    <!--   ~ Column 2: Course Grade -->
+    <!--   ~ Column 3: Waive/Transfer -->
+    <!--   ~ Column 4: Semester Taken -->
+    <div class="formThree">
+      <!-- TODO -->
+    </div>
+
+    <!-- === PDF VIEWER FORM === -->
+    <!--  * Degree Plan Viewer Button and Download Button -->
+    <!--  * Audit Report Viewer Button and Download Button -->
+    <div class="pdfViewer">
+      <!-- TODO -->
     </div>
   </div>
+  <div id="loading" class="loading">
+    <img src="loading.svg" alt="LOADING">
+  </div>
 </body>
-<script>
-  //Below Script is primarily for page load
-  //after the database has been read from.
-  let db_handler = new DBInfo();
-  document.getElementById("main-body").style.opacity = 0.0;
-  function postDB_pageUpdate(){
-    var degreeSelect = document.getElementById("dtrack");
-    var iter = 0;
-    for(const item in db_handler.getDegreeTracks()){
-      var degreeTrackName = db_handler.getDegreeTracks()[iter].name;
-      var option = document.createElement("option");
-      option.value = (iter+1);
-      option.innerHTML = degreeTrackName;
-      degreeSelect.appendChild(option);
-      iter++;
-    }
-    var antic_grad_yr = document.getElementById("antigrad_y");
-    for(let i = -10; i < 10; i++){
-      var year = new Date().getFullYear() + i;
-      var option = document.createElement("option");
-      option.value = year;
-      option.innerHTML = year;
-      if(i==0){option.selected = "selected";}
-      antic_grad_yr.appendChild(option);
-    }
-    var antic_grad_yr = document.getElementById("admit_y");
-    for(let i = -20; i < 1; i++){
-      var year = new Date().getFullYear() + i;
-      var option = document.createElement("option");
-      option.value = year;
-      option.innerHTML = year;
-      if(i==-4){option.selected = "selected";}
-      antic_grad_yr.appendChild(option);
-    }
-    var falloption = document.createElement("option");
-    falloption.innerHTML = "Fall";
-    falloption.value = "F";
-    var spoption = document.createElement("option");
-    spoption.innerHTML = "Spring";
-    spoption.value = "S";
-    document.getElementById("admit_s").appendChild(falloption);
-    document.getElementById("admit_s").appendChild(spoption);
-    var falloption = document.createElement("option");
-    falloption.innerHTML = "Fall";
-    falloption.value = "F";
-    var spoption = document.createElement("option");
-    spoption.innerHTML = "Spring";
-    spoption.value = "S";
-    document.getElementById("antigrad_s").appendChild(falloption);
-    document.getElementById("antigrad_s").appendChild(spoption);
-  }
-  async function start_page(){
-    await requestDegreeTracks(db_handler.getDegreeTracks());
-    await requestCourses(db_handler.getCourseList());
-    await requestGraduationRequirements(db_handler.getRequirements());
-    postDB_pageUpdate();
-    document.getElementById("main-body").style.opacity = 1.0;
-    console.log(db_handler.getCourseList());
-    console.log(db_handler.getDegreeTracks());
-    console.log(db_handler.getRequirements());
-  }
-  start_page();
-</script>
+<script src="main.js"></script>
 </html>
 
