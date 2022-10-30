@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2022 at 06:01 PM
+-- Generation Time: Oct 30, 2022 at 11:36 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -266,6 +266,26 @@ INSERT INTO `required_courses` (`degree`, `courseID`) VALUES
 (7, 'CS6380'),
 (7, 'CS6397');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `requirements`
+--
+
+CREATE TABLE `requirements` (
+  `req_id` int(11) NOT NULL,
+  `requirement_name` varchar(50) NOT NULL,
+  `requirement_gpa` decimal(4,3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `requirements`
+--
+
+INSERT INTO `requirements` (`req_id`, `requirement_name`, `requirement_gpa`) VALUES
+(1, 'Base GPA Requirement', '3.190'),
+(2, 'Extra Elective Needed', '3.000');
+
 --
 -- Indexes for dumped tables
 --
@@ -283,6 +303,12 @@ ALTER TABLE `degree_tracks`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `requirements`
+--
+ALTER TABLE `requirements`
+  ADD UNIQUE KEY `req_id` (`req_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -291,6 +317,12 @@ ALTER TABLE `degree_tracks`
 --
 ALTER TABLE `degree_tracks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `requirements`
+--
+ALTER TABLE `requirements`
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Database: `phpmyadmin`
 --
@@ -440,7 +472,7 @@ CREATE TABLE `pma__recent` (
 --
 
 INSERT INTO `pma__recent` (`username`, `tables`) VALUES
-('root', '[{\"db\":\"cs_gr\",\"table\":\"level_courses\"},{\"db\":\"cs_gr\",\"table\":\"required_courses\"},{\"db\":\"cs_gr\",\"table\":\"degree_tracks\"},{\"db\":\"cs_gr\",\"table\":\"course_list\"}]');
+('root', '[{\"db\":\"cs_gr\",\"table\":\"requirements\"},{\"db\":\"cs_gr\",\"table\":\"level_courses\"},{\"db\":\"cs_gr\",\"table\":\"required_courses\"},{\"db\":\"cs_gr\",\"table\":\"degree_tracks\"},{\"db\":\"cs_gr\",\"table\":\"course_list\"}]');
 
 -- --------------------------------------------------------
 
@@ -547,7 +579,7 @@ CREATE TABLE `pma__userconfig` (
 --
 
 INSERT INTO `pma__userconfig` (`username`, `timevalue`, `config_data`) VALUES
-('root', '2022-10-22 15:58:16', '{\"Console\\/Mode\":\"collapse\"}');
+('root', '2022-10-30 22:35:49', '{\"Console\\/Mode\":\"collapse\"}');
 
 -- --------------------------------------------------------
 
