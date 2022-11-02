@@ -41,7 +41,7 @@
     <!--  * Semester Admitted -->
     <!--  * Anticipated Graduation -->
     <!--  * Upload Transcript (optional) -->
-    <div class="formOne">
+    <div class="formOne" id="formOne">
       <div class="input-group">
         <br><br>
         <input type="text" placeholder="Student Name" id="sname" autocomplete="off">		
@@ -68,7 +68,7 @@
         <input id="fileupload" type="file" autocomplete="off">
       </div>    
       <br>
-      <button class="next_button">Next</button>
+      <button class="next_button" onclick="toFormTwo()">Next</button>
     </div>
 
     <!-- === FORM TWO === -->
@@ -78,19 +78,18 @@
     <!--  * Required Courses & Required Courses D&D-->
     <!--  * Elective Courses Manual Entry -->
     <!--  * Other Requirements Manual Entry -->
-    <div class="formTwo">
+    <div class="formTwo" id="formTwo">
       <!-- TODO -->
-      <button class = "previous_button">Back</button>
-      
-      <div class="input_group">
-        <input type="checkbox" id="thesis" name="thesis" value="thesis">
+      <button class = "previous_button" onclick="backToFormOne()">Back</button>
+      <div class="input-group">
         <label for="thesis"> Thesis</label><br>
+        <input type="checkbox" id="thesis" name="thesis" value="thesis">
       </div>
 
       
 
       <br>
-      <button class="next_button">Next</button>   
+      <button class="next_button" onclick="toFormThree()">Next</button>   
     </div>
 
     <!-- === FORM THREE === -->
@@ -99,10 +98,22 @@
     <!--   ~ Column 2: Course Grade -->
     <!--   ~ Column 3: Waive/Transfer -->
     <!--   ~ Column 4: Semester Taken -->
-    <div class="formThree">
+    <div class="formThree" id="formThree">
       <!-- TODO -->
+      <button class="previous_button" onclick="backToFormTwo()">Back</button>
+      <div class="input-group">
+        <table id="form3-table">
+          <tr>
+            <th>Course</th>
+            <th>Grade</th>
+            <th>Waive/Transfer</th>
+            <th>Semester Taken</th>
+          </tr>
+        </table>
+      </div>
+      <button class="next_button"  onclick="submitStudentInfo()">Submit</button>
     </div>
-
+    
     <!-- === PDF VIEWER FORM === -->
     <!--  * Degree Plan Viewer Button and Download Button -->
     <!--  * Audit Report Viewer Button and Download Button -->
@@ -113,7 +124,7 @@
   <div id="loading" class="loading">
     <img src="loading.svg" alt="LOADING">
   </div>
+  <script src="main.js"></script>
 </body>
-<script src="main.js"></script>
 </html>
 

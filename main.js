@@ -4,12 +4,13 @@
 *              are called by HTML elements in the main.html. 
 */
 
+
 // -- Program Objects --
 let db_handler = new DBInfo();
 //let pdf_parser = new PDFParser();
 //let gpa_calc = new GPACalculator();
 //let pdf_gen = new PDFGenerator();
-let student = new Student();
+//let student = new Student();
 
 // -- Code that runs on page execution.
 document.getElementById("main-body").style.opacity = 0.0;
@@ -19,31 +20,53 @@ start_page();
 // This function is called when a transcript is uploaded on form 1.
 // Show a loading screen while this process is happening.
 // It should auto-populate all of the student information and return to form 1.
-function parseTranscript(){
+function parseTranscript() {
     showLoading();
     // TODO: Parse transcript and populate student
     hideLoading();
 }
 
-// --to_form_two():--
+// --toFromTwo():--
 // This function is called when the "next" button on form 1 is pushed.
 // It performs the transition to form 2.
-function to_form_two(){
-    //TODO: Add Form Transition
+function toFormTwo() {
+    document.getElementById("formOne").style.display = "none";
+    //TODO: Add information to student object.
+    //TODO: Add Form Transition, populate fields in form 2
+    document.getElementById("formTwo").style.display = "inherit";
 }
 
-// --to_form_three():--
+// --toFormThree():--
 // This function is called when the "next" button on form 2 is pushed.
 // It performs the transition to form 3.
-function to_form_three(){
-    //TODO: Add Form Transition
+function toFormThree() {
+    document.getElementById("formTwo").style.display = "none";
+    //TODO: Add information to student object.
+    //TODO: Add Form Transition, populate fields in form 3
+    document.getElementById("formThree").style.display = "inherit";
+}
+
+// --backToFormOne():--
+// Called from hitting the back button on form two. No need to do any more than
+// than just updating visibility
+function backToFormOne() {
+    document.getElementById("formTwo").style.display = "none";
+    document.getElementById("formOne").style.display = "inherit";
+}
+
+// --backToFormTwo():--
+// Called from hitting the back button on form three. No need to do any more than
+// than just updating visibility
+function backToFormTwo() {
+    document.getElementById("formThree").style.display = "none";
+    document.getElementById("formTwo").style.display = "inherit";
 }
 
 // --submit_student_info():--
 // This function is called when the "submit" buttom on form 3 is pushed.
 // This calls all the functions to calculate information and generate the PDFs.
 // This will transition over to the PDF viewer form of main.html once finished.
-function submit_student_info(){
+function submitStudentInfo() {
     showLoading();
     performCalculations();
     generatePDFs();
@@ -54,13 +77,13 @@ function submit_student_info(){
 // --performCalculations():--
 // This function performs all of the GPA calculations and pushes them to the student object.
 // Called when submitting form 3.
-function performCalculations(){
+function performCalculations() {
     //TODO: Call gpa calculation functions
 }
 
 // --generatePDFs():--
 // This function calls the PDFGenerator functions to create PDFs from student information.
-function generatePDFs(){
+function generatePDFs() {
     //TODO: Call PDF generation functions
 }
 
@@ -68,7 +91,7 @@ function generatePDFs(){
 // This function is used to update the page, populating form 1 with all of the information retrieved
 // from the database. This is called only when all the information is returned from the database.
 // Once that happens, then the page shows.
-function postDB_pageUpdate(){
+function postDB_pageUpdate() {
     var degreeSelect = document.getElementById("dtrack");
     var iter = 0;
     for(const item in db_handler.getDegreeTracks()){
@@ -117,7 +140,7 @@ function postDB_pageUpdate(){
 
 // --start_page():--
 // This function is called on page execution and retrieves information from the database
-async function start_page(){
+async function start_page() {
     await requestDegreeTracks(db_handler.getDegreeTracks());
     await requestCourses(db_handler.getCourseList());
     await requestGraduationRequirements(db_handler.getRequirements());
@@ -131,7 +154,7 @@ async function start_page(){
 
 // --showLoading():--
 // Show the loading wheel
-function showLoading(){
+function showLoading() {
     loading = document.getElementById("loading");
     loading.style.zIndex = 1;
     loading.style.opacity = 1.0;
@@ -139,13 +162,13 @@ function showLoading(){
 
 // --hideLoading():--
 // Hide the loading wheel
-function hideLoading(){
+function hideLoading() {
     loading = document.getElementById("loading");
     loading.style.zIndex = -2;
     loading.style.opacity = 0.0;
 }
 
-// When a transcript is uploaded, 
+// When a transcript is uploaded, get the text from it
 document.getElementById("fileupload").addEventListener("change", function(event){
     showLoading();
     var file = event.target.files[0];
