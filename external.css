@@ -38,6 +38,25 @@ a:visited {
   position: relative;
   margin: auto;
   margin-top: 50px;
+  transition-duration: 1s;
+}
+
+.formTwo{
+  width: 50%;
+  display: none;
+  position: relative;
+  margin: auto;
+  margin-top: 50px;
+  transition-duration: 1s;
+}
+
+.formThree{
+  width: 50%;
+  display: none;
+  position: relative;
+  margin: auto;
+  margin-top: 50px;
+  transition-duration: 1s;
 }
 
 nav{
@@ -112,6 +131,20 @@ list-style: none;
   font-size: 20px;
 }
 
+.previous_button {
+  margin: auto;
+  background-color: #e87500; 
+  border: 1px solid; 
+  border-radius: 5px; 
+  color: white;
+  display: block; 
+  text-align: center; 
+  width: 50%; 
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif; 
+  height: 30px;
+}
+
 .next_button {
   margin: auto;
   background-color: #e87500; 
@@ -124,6 +157,7 @@ list-style: none;
   font-weight: bold;
   font-family: 'Poppins', sans-serif; 
   height: 30px;
+  z-index: 1;
 }
 
 #submit {
@@ -163,4 +197,64 @@ list-style: none;
 }
 .loading img {
   opacity: 1.0;
+}
+
+#form3-table {
+  margin: auto;
+  width: 100%;
+}
+
+th, td {
+  border: black solid 2px;
+  margin: auto;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.adminForm {
+  width: 75%;
+  display: inherit;
+  position: relative;
+  margin: auto;
+  margin-top: 50px;
+  transition-duration: 1s;
+}
+
+.adminTable {
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  font-family: 'Poppins', sans-serif; 
+}
+
+#err_msg {
+  font-family: 'Poppins', sans-serif; 
+  color: red;
+  margin: auto;
+}
+
+.addWindowBG{
+  z-index: -1;
+  background: rgba(255, 255, 255, 0.3);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  transition-duration: 1s;
+  opacity: 0.0;
+}
+
+.addWindow {
+  width: 75%;
+  position: relative;
+  background-color: antiquewhite;
+  border-radius: 10px;
+  border: #e87500 solid 3px;
+  box-shadow: #333 3px 3px 3px;
+  margin: auto;
+  padding: 20px;
 }

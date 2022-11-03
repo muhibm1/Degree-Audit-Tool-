@@ -10,7 +10,7 @@ let db_handler = new DBInfo();
 //let pdf_parser = new PDFParser();
 //let gpa_calc = new GPACalculator();
 //let pdf_gen = new PDFGenerator();
-//let student = new Student();
+let student = new Student("--", "--", "--", "--");
 
 // -- Code that runs on page execution.
 document.getElementById("main-body").style.opacity = 0.0;
@@ -31,7 +31,12 @@ function parseTranscript() {
 // It performs the transition to form 2.
 function toFormTwo() {
     document.getElementById("formOne").style.display = "none";
-    //TODO: Add information to student object.
+    student.setName(document.getElementById("sname").value);
+    student.setSID(document.getElementById("sid").value);
+    student.setDegreeTrackID(document.getElementById("dtrack").value);
+    student.setAdmittedSemester(document.getElementById("admit_y").value + document.getElementById("admit_s").value);
+    student.setAnticipatedGraduation(document.getElementById("antigrad_y").value + document.getElementById("antigrad_s").value);
+    console.log(student);
     //TODO: Add Form Transition, populate fields in form 2
     document.getElementById("formTwo").style.display = "inherit";
 }

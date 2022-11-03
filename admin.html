@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html>
 <title>UTD degree planning and audit tool</title>
 
@@ -9,6 +9,11 @@
 <meta htto-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" type="text/css" href="external.css"> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+  td{
+    font-size: 14px;
+  }
+</style>
 </head>
 
 <body style="background-color:Gainsboro;">
@@ -19,56 +24,110 @@
 </div>       
 </header>
 
-<nav>                     
-                
-<ul class="nav-links">
- <li><a href="main.html">Home</a></li>  
-  <li><a href="02register.html">Sign-in</a></li>
-  <li><a href="admin.html">Admin</a></li>
-  <li><a href="04contactus.html">Contact Us</a></li>
-</ul>
-
-<div class="burger">
-<div class="line1"></div>
-<div class="line2"></div>
-<div class="line3"></div>
-
-</div>
+<nav>                               
+  <ul class="nav-links">
+    <li><a href="main.html">Home</a></li>  
+    <li><a href="admin.html">Admin</a></li>
+  </ul>
 </nav>
 
-<div class="Covid">
-<div id="date-time" class="time"></div>
-	<h5>COVID-ALERT: UTD is closely monitoring the outbreak of COVID-19 (coronavirus).</h5>
+<div class="adminForm" id="signin_form">
+  <div class="input-group">
+    <h3>Sign in</h3>
+  </div>
+  <div class="input-group">
+    <label for="uID">User Id:</label><br>
+    <input type="text" id="userID" name="userID" value="" autocomplete="off"><br>
+  </div>
+  <div class="input-group">
+    <label for="passwprd">Password:</label><br>
+    <input type="password" id="password" name="password" value=""><br><br>
+  </div>
+  <div class="input-group">
+    <h3 id="err_msg"></h3>
+  </div>
+    <button class="next_button" onclick="submitLoginCred()">Sign In</button>
 </div> 
 
-	
-
-<div class="row">
-  <div class="column side">
+<div class="adminForm" id="adminPage">
+  <div class="input-group">
+    <h3>Course List</h3>
+  </div>
+  <table class="adminTable" id="coursesTable">
+    <tr>
+      <th>Couse ID</th>
+      <th>Course Name</th>
+      <th>Edit/Delete</th>
+    </tr>
+  </table>
+  <button class="next_button" onclick="showAddCourseWindow()">Add Course</button>
+  <div class="input-group">
+    <h3>Degree Tracks</h3>
+  </div>
+  <table class="adminTable" id="degreesTable">
+    <tr>
+      <th>Degree Track ID</th>
+      <th>Degree Track Name</th>
+      <th>Level Courses</th>
+      <th>Required Courses</th>
+      <th>Edit/Delete</th>
+    </tr>
+  </table>
+  <button class="next_button" onclick="showAddDegreeWindow()">Add Degree Track</button>
+  <div class="input-group">
+    <h3>Graduation Requirements</h3>
+  </div>
+  <table class="adminTable" id="requirementsTable" style="margin-bottom: 100px;">
+    <tr>
+      <th>Short Description</th>
+      <th>GPA</th>
+      <th>Edit</th>
+    </tr>
+  </table>
+</div>
+<div id="loading" class="loading">
+  <img src="loading.svg" alt="LOADING">
 </div>
 
-  <div class="column middle" style ="align-items: center" >
-
-<form method="post" action="login.php">
-<br><br><h3>Sign in</h3><br>
- <label for="uID">User Id:</label><br>
-  <input type="text" id="userID" name="userID" value=""><br>
-  <label for="passwprd">Password:</label><br>
-  <input type="text" id="password" name="password" value=""><br><br>
-  <input type="submit" name="check" value="login" style="background-color: #e87500; border: 1px solid; border-radius: 5 px; color: white; display: inline-block; text-align: center; width: 100px; font-weight: bold;
-font-family: 'Poppins', sans-serif; height: 30px">
+<div id="addCourseWindow" class="addWindowBG">
+  <div id="addCourse" class="addWindow">
+    <div class="input-group">
+      <label>Course ID</label>
+      <input type="text" placeholder="CSXXXX" autocomplete="off" id="addCourse_idField">
+    </div>
+    <div class="input-group">
+      <label>Course Name</label>
+      <input type="text" autocomplete="off" id="addCourse_nameField">
+    </div>
+    <div class="input-group">
+      <button class="next_button" onclick="removeAddCourseWindow()">Cancel</button>
+      <button class="next_button" onclick="">Add Course</button>
+    </div>
+  </div>
 </div>
 
-  <div class="column side">
-
+<div id="addDegreeWindow" class="addWindowBG">
+  <div id="addDegree" class="addWindow">
+    <div class="input-group">
+      <label>Degree Name</label>
+      <input type="text" autocomplete="off" id="addDegree_nameField">
+    </div>
+    <div class="input-group">
+      <label>Level Courses</label>
+      <input type="text" placeholder="CSXXXX, CSXXXX, CSXXXX, ..." autocomplete="off" id="addDegree_levelField">
+    </div>
+    <div class="input-group">
+      <label>Core Required Courses</label>
+      <input type="text" placeholder="CSXXXX, CSXXXX, CSXXXX, ..." autocomplete="off" id="addDegree_reqField">
+    </div>
+    <div class="input-group">
+      <button class="next_button" onclick="removeAddDegreeWindow()">Cancel</button>
+      <button class="next_button" onclick="">Add Degree Track</button>
+    </div>
+  </div>
 </div>
-
-<div class="footer">
- 
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    
+<script src="admin.js"></script>
+<script src="db_interface.js"></script>
 </body>
 </html>
 
