@@ -59,6 +59,62 @@ a:visited {
   transition-duration: 1s;
 }
 
+
+.drag-and-drop {
+  display: flex;
+  max-width: 860px;
+  padding: 20px;
+  margin: 0 auto;
+}
+.drag-and-drop__container {
+  position: flex;
+  width: 50%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+.drag-and-drop__divider {
+  padding: 10px;
+  font-size: 20px;
+  align-self: center;
+}
+.drag-and-drop__title {
+  padding: 15px 20px;
+  font-size: 20px;
+  background: #ddd;
+}
+.drag-and-drop__items {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  min-height: 150px;
+  margin: 0 -1px;
+  padding-bottom: 40px;
+  border-top: 1px solid #ccc;
+}
+.drag-and-drop__items--adding {
+  background-color: #9ae6b4;
+}
+.drag-and-drop__items--removing {
+  background-color: #fbd38d;
+}
+.drag-and-drop__item {
+  padding: 15px 20px;
+  border: 1px solid #ccc;
+  border-top: 0;
+  line-height: 1;
+  cursor: move;
+  background-color: #fff;
+}
+.drag-and-drop__item:hover {
+  background-color: #eee;
+}
+.drag-and-drop__item--dragging {
+  color: #ccc !important;
+  background-color: #fff !important;
+}
+
+
+
 nav{
   display: flex;
   margin-top:60px;

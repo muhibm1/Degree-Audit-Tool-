@@ -15,6 +15,7 @@
 <script src="student.js"></script>
 <script src="calculator.js"></script>
 <script src="pdf_generator.js"></script>
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body style="background-color:Gainsboro;">
@@ -81,12 +82,257 @@
     <div class="formTwo" id="formTwo">
       <!-- TODO -->
       <button class = "previous_button" onclick="backToFormOne()">Back</button>
+      <br>
       <div class="input-group">
         <label for="thesis"> Thesis</label><br>
         <input type="checkbox" id="thesis" name="thesis" value="thesis">
       </div>
 
-      
+      <div class="drag-and-drop" x-data="{ adding: false, removing: false }">
+    <div class="drag-and-drop__container drag-and-drop__container--from">
+        <h3 class="drag-and-drop__title">Required courses</h3>
+        <ul
+            class="drag-and-drop__items"
+            :class="{ 'drag-and-drop__items--removing': removing }"
+            x-on:drop="removing = false"
+            x-on:drop.prevent="
+                const target = event.target.closest('ul');
+                const element = document.getElementById(event.dataTransfer.getData('text/plain'));
+                target.appendChild(element);
+            "
+            x-on:dragover.prevent="removing = true"
+            x-on:dragleave.prevent="removing = false">
+            <!-- loop through the items -->
+            <li
+                id="item-1"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #1
+            </li>
+            <li
+                id="item-2"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #2
+            </li>
+            <li
+                id="item-3"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #3
+            </li>
+            
+        </ul>
+    </div>
+    <div class="drag-and-drop__divider">⇄</div>
+    <div class="drag-and-drop__container drag-and-drop__container--to">
+        <h3 class="drag-and-drop__title">Required courses for track</h3>
+        <ul
+            class="drag-and-drop__items"
+            :class="{ 'drag-and-drop__items--adding': adding }"
+            x-on:drop="adding = false"
+            x-on:drop.prevent="
+                const target = event.target.closest('ul');
+                const element = document.getElementById(event.dataTransfer.getData('text/plain'));
+                target.appendChild(element);
+            "
+            x-on:dragover.prevent="adding = true"
+            x-on:dragleave.prevent="adding = false">
+            <li
+                id="item-4"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #4
+            </li>
+            <li
+                id="item-5"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #5
+            </li>
+            <li
+                id="item-6"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #6
+            </li>
+            <!-- loop through the already selected items -->
+        </ul>
+    </div>
+  </div>
+
+  <div class="drag-and-drop" x-data="{ adding: false, removing: false }">
+    <div class="drag-and-drop__container drag-and-drop__container--from">
+        <h3 class="drag-and-drop__title">Pre-requisite courses</h3>
+        <ul
+            class="drag-and-drop__items"
+            :class="{ 'drag-and-drop__items--removing': removing }"
+            x-on:drop="removing = false"
+            x-on:drop.prevent="
+                const target = event.target.closest('ul');
+                const element = document.getElementById(event.dataTransfer.getData('text/plain'));
+                target.appendChild(element);
+            "
+            x-on:dragover.prevent="removing = true"
+            x-on:dragleave.prevent="removing = false">
+            <!-- loop through the items -->
+            <li
+                id="item-1"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #1
+            </li>
+            <li
+                id="item-2"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #2
+            </li>
+            <li
+                id="item-3"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #3
+            </li>
+            
+        </ul>
+    </div>
+    <div class="drag-and-drop__divider">⇄</div>
+    <div class="drag-and-drop__container drag-and-drop__container--to">
+        <h3 class="drag-and-drop__title">Pre-requisite courses for track</h3>
+        <ul
+            class="drag-and-drop__items"
+            :class="{ 'drag-and-drop__items--adding': adding }"
+            x-on:drop="adding = false"
+            x-on:drop.prevent="
+                const target = event.target.closest('ul');
+                const element = document.getElementById(event.dataTransfer.getData('text/plain'));
+                target.appendChild(element);
+            "
+            x-on:dragover.prevent="adding = true"
+            x-on:dragleave.prevent="adding = false">
+            <li
+                id="item-4"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #4
+            </li>
+            <li
+                id="item-5"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #5
+            </li>
+            <li
+                id="item-6"
+                class="drag-and-drop__item"
+                :class="{ 'drag-and-drop__item--dragging': dragging }"
+                x-on:dragstart.self="
+                    dragging = true;
+                    event.dataTransfer.effectAllowed='move';
+                    event.dataTransfer.setData('text/plain', event.target.id);
+                "
+                x-on:dragend="dragging = false"
+                x-data="{ dragging: false }"
+                draggable="true">
+                Course #6
+            </li>
+            <!-- loop through the already selected items -->
+        </ul>
+    </div>
+  </div>
+
+
+
+</div>
 
       <br>
       <button class="next_button" onclick="toFormThree()">Next</button>   
