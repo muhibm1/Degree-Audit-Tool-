@@ -83,8 +83,9 @@ class GPA_Calculator extends Student{
         this.min_gpa = ((3.19 * (this.count_core_classes + difference.length)) - (core_gpa * this.count_core_classes))/ difference.length; 
 
         
-        //return this.outstanding_req;
-        return ("The student needs a GPA of" + this.min_gpa + "in" + this.outstanding_req + " to maintain a 3.19 core GPA");
+        //return this.outstanding_req_string;
+        this.outstanding_req_string = "The student needs a GPA of" + this.min_gpa + "in" + this.outstanding_req + " to maintain a 3.19 core GPA";
+        return this.outstanding_req_string;
     }
 
 }
