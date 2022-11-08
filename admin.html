@@ -55,7 +55,7 @@
   </div>
   <table class="adminTable" id="coursesTable">
     <tr>
-      <th>Couse ID</th>
+      <th>Course ID</th>
       <th>Course Name</th>
       <th>Edit/Delete</th>
     </tr>
@@ -101,33 +101,126 @@
     </div>
     <div class="input-group">
       <button class="next_button" onclick="removeAddCourseWindow()">Cancel</button>
-      <button class="next_button" onclick="">Add Course</button>
+      <button class="next_button" onclick="addCourse()">Add Course</button>
+    </div>
+  </div>
+</div>
+
+<div id="editCourseWindow" class="addWindowBG">
+  <div id="editCourse" class="addWindow">
+    <div class="input-group">
+      <label>Course ID</label>
+      <input type="text" placeholder="CSXXXX" autocomplete="off" id="editCourse_idField" disabled style="background-color: #c3c3c3;">
+    </div>
+    <div class="input-group">
+      <label>Course Name</label>
+      <input type="text" autocomplete="off" id="editCourse_nameField">
+    </div>
+    <div class="input-group">
+      <button class="next_button" onclick="removeEditCourseWindow()">Cancel</button>
+      <button class="next_button" onclick="">Edit Course</button>
     </div>
   </div>
 </div>
 
 <div id="addDegreeWindow" class="addWindowBG">
   <div id="addDegree" class="addWindow">
+    <p id="addDegree_id" style="display:none;">--</p>
     <div class="input-group">
       <label>Degree Name</label>
       <input type="text" autocomplete="off" id="addDegree_nameField">
     </div>
     <div class="input-group">
       <label>Level Courses</label>
-      <input type="text" placeholder="CSXXXX, CSXXXX, CSXXXX, ..." autocomplete="off" id="addDegree_levelField">
+      <input type="text" placeholder="CSXXXX,CSXXXX,CSXXXX,..." autocomplete="off" id="addDegree_levelField">
     </div>
     <div class="input-group">
       <label>Core Required Courses</label>
-      <input type="text" placeholder="CSXXXX, CSXXXX, CSXXXX, ..." autocomplete="off" id="addDegree_reqField">
+      <input type="text" placeholder="CSXXXX,CSXXXX,CSXXXX,..." autocomplete="off" id="addDegree_reqField">
     </div>
     <div class="input-group">
       <button class="next_button" onclick="removeAddDegreeWindow()">Cancel</button>
-      <button class="next_button" onclick="">Add Degree Track</button>
+      <button class="next_button" onclick="addDegreeTrack()">Add Degree Track</button>
     </div>
   </div>
 </div>
-<script src="admin.js"></script>
+
+<div id="editDegreeWindow" class="addWindowBG">
+  <div id="editDegree" class="addWindow">
+    <div class="input-group">
+      <label>Degree ID</label>
+      <input type="text" autocomplete="off" id="editDegree_idField" disabled style="background-color: #c3c3c3;">
+    </div>
+    <div class="input-group">
+      <label>Degree Name</label>
+      <input type="text" autocomplete="off" id="editDegree_nameField">
+    </div>
+    <div class="input-group">
+      <label>Level Courses</label>
+      <input type="text" placeholder="CSXXXX,CSXXXX,CSXXXX,..." autocomplete="off" id="editDegree_levelField">
+    </div>
+    <div class="input-group">
+      <label>Core Required Courses</label>
+      <input type="text" placeholder="CSXXXX,CSXXXX,CSXXXX,..." autocomplete="off" id="editDegree_reqField">
+    </div>
+    <div class="input-group">
+      <button class="next_button" onclick="removeEditDegreeWindow()">Cancel</button>
+      <button class="next_button" onclick="editDegreeTrack()">Edit Degree Track</button>
+    </div>
+  </div>
+</div>
+
+<div id="deleteCourseWindow" class="addWindowBG">
+  <div id="editDegree" class="addWindow">
+    <div class="input-group">
+      <label for="none" id="deleteCourse_text">--</label>
+    </div>
+    <div class="input-group" style="display: none;">
+      <label for="none" id="deleteCourse_ref">--</label>
+    </div>
+    <div class="input-group">
+      <button class="next_button" onclick="removeDeleteCourseWindow()">Cancel</button>
+      <button class="next_button" onclick="removeCourse()">Delete Course</button>
+    </div>
+  </div>
+</div>
+
+<div id="deleteDegreeWindow" class="addWindowBG">
+  <div id="editDegree" class="addWindow">
+    <div class="input-group">
+      <label for="none" id="deleteDegree_text">--</label>
+    </div>
+    <div class="input-group" style="display: none;">
+      <label for="none" id="deleteDegree_ref">--</label>
+    </div>
+    <div class="input-group">
+      <button class="next_button" onclick="removeDeleteDegreeWindow()">Cancel</button>
+      <button class="next_button" onclick="removeDegreeTrack()">Delete Degree Track</button>
+    </div>
+  </div>
+</div>
+
+<div id="editRequirementWindow" class="addWindowBG">
+  <div id="editRequirement" class="addWindow">
+    <div class="input-group" style="display: none;">
+      <label for="none" id="editRequirement_ref">--</label>
+    </div>
+    <div class="input-group">
+      <label for="none">Short Description</label>
+      <input type="text" autocomplete="off" id="editRequirement_nameField" disabled style="background-color: #c3c3c3;">
+    </div>
+    <div class="input-group">
+      <label for="none">GPA Requirement</label>
+      <input type="text" autocomplete="off" id="editRequirement_gpaField">
+    </div>
+    <div class="input-group">
+      <button class="next_button" onclick="hideEditRequirementWindow()">Cancel</button>
+      <button class="next_button" onclick="editRequirement()">Edit Graduation Requirement</button>
+    </div>
+  </div>
+</div>
 <script src="db_interface.js"></script>
+<script src="admin.js"></script>
 </body>
 </html>
 

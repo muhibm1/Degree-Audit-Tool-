@@ -27,6 +27,12 @@ class DBInfo {
     getRequirements(){
         return this.requirements;
     }
+
+    resetDBInfo(){
+        this.courses = [];
+        this.degrees = [];
+        this.requirements = [];
+    }
 }
 
 function requestCourses(courses){
@@ -42,7 +48,7 @@ function requestCourses(courses){
         xhttp.onerror = function(){
             reject();
         }
-        xhttp.open("GET", "reqcourses.php");
+        xhttp.open("GET", "php_pages/reqcourses.php");
         xhttp.send();
     });
 }
@@ -66,7 +72,7 @@ function requestDegreeTracks(degrees){
                     retrievals += 1;
                 }
             }
-            xhttp.open("GET", "reqtracks.php?s="+id);
+            xhttp.open("GET", "php_pages/reqtracks.php?s="+id);
             xhttp.send();
             if(id >= 30){
                 fetching = false;
@@ -88,7 +94,7 @@ function requestGraduationRequirements(requirements){
         xhttp.onerror = function(){
             reject();
         }
-        xhttp.open("GET", "reqrequirements.php");
+        xhttp.open("GET", "php_pages/reqrequirements.php");
         xhttp.send();
     });
 }

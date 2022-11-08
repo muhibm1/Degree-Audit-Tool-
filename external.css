@@ -68,7 +68,7 @@ a:visited {
 }
 .drag-and-drop__container {
   position: flex;
-  width: 50%;
+  width: 100%;
   border: 1px solid #ccc;
   border-radius: 10px;
 }
@@ -291,7 +291,7 @@ th, td {
 
 .addWindowBG{
   z-index: -1;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.5);
   position: fixed;
   display: flex;
   justify-content: center;
@@ -313,4 +313,14 @@ th, td {
   box-shadow: #333 3px 3px 3px;
   margin: auto;
   padding: 20px;
+}
+
+.adminTableButton{
+  width: 50%;
+  font-family: 'Poppins', sans-serif; 
+  color: white;
+  background-color: #e87500;
+  border: white solid 3px;
+  font-size: 20px;
+  font-weight: bold;
 }
