@@ -50,16 +50,10 @@ a:visited {
   transition-duration: 1s;
 }
 
-
-h4 {
-  color: #e87500;
-  margin-top: 0px;
-}
-
 [data-drop-target] {
 			height: 200px;
 			width: 300px;
-			margin: 25px;
+			margin: 10px;
 			background-color: #E8E8E8;
 			float: left;
 		}
