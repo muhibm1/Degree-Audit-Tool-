@@ -1,7 +1,4 @@
 
-
-
-
 class GPA_Calculator extends Student{
     constructor(){
         this.outstanding_req = "";
@@ -16,42 +13,71 @@ class GPA_Calculator extends Student{
         return this.core_GPA;
     }
 
-    calculate_core_GPA(courses_taken,core_grades,core_attributes){
+ function calculate_core_GPA(cores_taken,core_grades,core_attributes){
         // Calculate the core GPA
         var core_GPA = 0.000;
-        var core_classes = 0;
-        for(var i = 0; i < courses_taken.length; i++){
-            
+        this.sum_core_GPA = 0;
+        var credit_holder = [];
+        this.core_total_credit_pts = 0;
+
+        cores_taken = cores_taken;
+        core_grades = core_grades;
+        core_attributes = core_attributes;
+
+        for(var i = 0; i < cores_taken.length; i++){
             if(core_attributes[i] == "0"){
-                core_GPA = core_GPA + core_grades[i];
-                core_classes++;
-            }
+                credit_holder[i]= a1[i].charAt(3);
+                core_total_credit_pts =  core_total_credit_pts + Number(credit_holder[i]);
+
+                this.sum_core_GPA = sum_core_GPA + (core_grades[i]*Number(+a1[i].charAt(3)));
+              }
+        
         }
-        var core_GPA = core_GPA / core_classes;
-        return this.core_GPA;
-    }
-    calculate_elective_GPA(electives_taken,elective_grades,elective_attributes){
-        // Calculate the elective GPA
-        var elective_GPA = 0.000;
-        var elective_classes = 0;
-        for(var i = 0; i < electives_taken.length; i++){
-             
-            if(elective_attributes[i] == "0"){
-                elective_GPA = elective_GPA + elective_grades[i];
-                elective_classes++;
-            }
+        core_GPA = sum_core_GPA / core_total_credit_pts;
+        return core_GPA.toFixed(3);
+        //console.log(core_GPA.toFixed(3));
+ }
+    
+function calculate_elective_GPA(electives_taken,elective_grades,elective_attributes){
+    // Calculate the core GPA
+    var elective_GPA = 0.000;
+    this.sum_elective_GPA = 0;
+    var credit_holder = [];
+    this.elective_total_credit_pts = 0;
+    
+    electives_taken = electives_taken;
+    elective_grades = elective_grades;
+    elective_attributes = elective_attributes;
+
+    for(var i = 0; i < electives_taken.length; i++){
+        if(elective_attributes[i] == "0"){
+            credit_holder[i]= a1[i].charAt(3);
+            elective_total_credit_pts =  elective_total_credit_pts + Number(credit_holder[i]);
+
+            this.sum_elective_GPA = sum_elective_GPA + (elective_grades[i]*Number(+a1[i].charAt(3)));
         }
-        var elective_GPA = elective_GPA / elective_classes;
-        return elective_GPA;
+        
     }
-  
-    calculate_total_GPA(){
-        // Calculate the total GPA
-        var core_gpa = this.calculate_core_GPA();
-        var elective_gpa = this.calculate_elective_GPA();
-        var total_gpa = (core_gpa + elective_gpa) / 2;
-        return total_gpa;
-    }
+
+    elective_GPA = sum_elective_GPA / elective_total_credit_pts;
+    return elective_GPA.toFixed(3);
+    //console.log(elective_GPA.toFixed(3));
+    
+}
+    
+ function calculate_total_GPA(sum_core_GPA, sum_elective_GPA ,core_total_credit_pts, elective_total_credit_pts){
+    this.sum_core_GPA = sum_core_GPA;
+    this.sum_elective_GPA = sum_elective_GPA;
+    this.core_total_credit_pts = core_total_credit_pts;
+    this.elective_total_credit_pts = elective_total_credit_pts;
+    var total_GPA = 0.000;
+    var total_credit_pts = 0;
+    total_credit_pts = core_total_credit_pts + elective_total_credit_pts;
+    total_GPA = (sum_core_GPA + sum_elective_GPA) / total_credit_pts;
+    
+    return total_GPA.toFixed(3);
+
+ }         
     
     incomplete_requirements(total_required_courses,core_taken,core_attributes ){
         // Check if the student has completed all requirements
@@ -67,7 +93,7 @@ class GPA_Calculator extends Student{
             }
         }
 
-        
+   
 
         let difference = total_required_courses.filter(x => !core_taken.includes(x));
 
