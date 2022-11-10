@@ -116,6 +116,50 @@ function parseText(rawText){
           }
         }
       }
+    
+    function admittedSem(rawText) {
+      newText = rawText.split("-");
+      console.log(newText);
+
+
+      for(i=0;i < newText.length;i++){
+        if(newText[i].includes("Beginning of Graduate Record")){
+          var path = String(newText[i]);
+          const pattern = /^\d+Beginning of Graduate Record(\d+) (\w{0,4})/
+          const match = path.match(pattern);
+          admittedSemester = match[1] + match[2];
+          console.log(admittedSemester)
+        }
+      }
+    }
+    
+    function courseSemesters(rawText) {
+      newText = rawText.split(":");
+      const semesters = [];
+
+
+     for(i=0;i < newText.length;i++){
+       if(newText[i].includes("Beginning of Graduate Record")){
+         var path = String(newText[i]);
+         const pattern = /^ \d+-\d+-\d+Beginning of Graduate Record(\d+) (\w{0,4})/
+         const match = path.match(pattern);
+         singleSemester = match[1] + match[2];
+         semesters.push(singleSemester);
+       }
+
+       if(newText[i].includes("Good Standing")){
+         var path = String(newText[i]);
+         const pattern = /^ Good Standing(\d+) (\w{0,6})/
+         const match = path.match(pattern);
+         singleSemester2 = match[1] + match[2];
+         semesters.push(singleSemester2);
+      
+       }
+       console.log(semesters)
+     }
+   }
+    
+    
       
       getName(rawText);
       getSID(rawText);
