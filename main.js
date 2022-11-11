@@ -37,8 +37,73 @@ function toFormTwo() {
     student.setAdmittedSemester(document.getElementById("admit_y").value + document.getElementById("admit_s").value);
     student.setAnticipatedGraduation(document.getElementById("antigrad_y").value + document.getElementById("antigrad_s").value);
     console.log(student);
-    //TODO: Add Form Transition, populate fields in form 2
+    populateFormTwo();
     document.getElementById("formTwo").style.display = "inherit";
+}
+
+function populateFormTwo(){
+    let degree = db_handler.getDegreeTracks()[student.getDegreeTrackID()-1];
+    let level_courses = degree['level_courses'];
+    let core_courses = degree['req_courses'];
+    level_courses.forEach(courseID => {
+        let list_item = document.createElement('p');
+        list_item.innerHTML = courseID;
+        list_item.classList.add("drag_item");
+        list_item.draggable = "true";
+        document.getElementById("degree_level_container").append(list_item);
+        add_drag_evt(list_item);
+    });
+    core_courses.forEach(courseID => {
+        let list_item = document.createElement('p');
+        list_item.innerHTML = courseID;
+        list_item.classList.add("drag_item");
+        list_item.draggable = "true";
+        document.getElementById("degree_required_container").append(list_item);
+        add_drag_evt(list_item);
+    });
+    addDropEvt(document.getElementById("student_level_container"));
+    addDropEvt(document.getElementById("student_required_container"));
+    addDropEvt(document.getElementById("degree_level_container"));
+    addDropEvt(document.getElementById("degree_required_container"));
+}
+
+function add_drag_evt(p){
+    p.addEventListener('dragstart', function(){
+        p.classList.add('dragging');
+        p.id = "dragging";
+    });
+    p.addEventListener('dragend', function(){
+        p.classList.remove('dragging');
+        p.id="";
+    });
+}
+
+function addDropEvt(container){
+    container.addEventListener("dragover", function(event){
+        let item = document.getElementById("dragging");
+        container.appendChild(item);
+    });
+}
+
+function entryKeyPress(event, parent, input){
+    if (event.key === "Enter") {
+        var newInput = document.createElement("input");
+        newInput.type = "text";
+        newInput.placeholder = "CSXXXX";
+        newInput.id = "elective_courseEntry";
+        newInput.className = "courseEntry";
+        newInput.autocomplete = "off";
+        newInput.addEventListener("keydown", function(event){ entryKeyPress(event, parent, newInput); });
+        parent.appendChild(newInput);
+        newInput.focus();
+    }
+    if (event.key === "Backspace") {
+        if(input.value == "" && parent.childNodes.length > 3){
+            parent.removeChild(input);
+            parent.lastElementChild.focus();
+            event.preventDefault();
+        }
+    }
 }
 
 // --toFormThree():--
@@ -46,10 +111,162 @@ function toFormTwo() {
 // It performs the transition to form 3.
 function toFormThree() {
     document.getElementById("formTwo").style.display = "none";
-    //TODO: Add information to student object.
-    //TODO: Add Form Transition, populate fields in form 3
+    console.log(document.getElementById("student_level_container").children);
+    console.log(document.getElementById("student_required_container").children);
+    console.log(document.getElementById("elective_entry").children);
+    console.log(document.getElementById("other_entry").children);
+    for (const node of document.getElementById("student_level_container").children){
+        var courseID = node.innerHTML;
+        student.addLevelCourseTaken(courseID);
+        student.addLevelCourseGrade(0.000);
+        student.addLevelCourseAttribute(0);
+        student.addCourseTaken(courseID);
+        student.addCourseGrade(0.000);
+        student.addCourseAttribute(0);
+    }
+    for (const node of document.getElementById("student_required_container").children){
+        var courseID = node.innerHTML;
+        student.addCoreCourseTaken(courseID);
+        student.addCoreCourseGrade(0.000);
+        student.addCoreCourseAttribute(0);
+        student.addCourseTaken(courseID);
+        student.addCourseGrade(0.000);
+        student.addCourseAttribute(0);
+    }
+    for (const node of document.getElementById("elective_entry").children){
+        if(node.value != ""){
+            var courseID = node.value;
+            student.addElectiveCourseTaken(courseID);
+            student.addElectiveCourseGrade(0.000);
+            student.addElectiveCourseTaken(0);
+            student.addCourseTaken(courseID);
+            student.addCourseGrade(0.000);
+            student.addCourseAttribute(0);
+        }
+    }
+    for (const node of document.getElementById("other_entry").children){
+        if(node.value != ""){
+            var courseID = node.value;
+            student.addCourseTaken(courseID);
+            student.addCourseGrade(0.000);
+            student.addCourseAttribute(0);
+        }
+    }
+    console.log(student.getCoursesTaken());
+    populateFormThree();
     document.getElementById("formThree").style.display = "inherit";
 }
+
+function populateFormThree(){
+    var c_id = 0;
+    for(const course in student.getCoursesTaken()){
+        var newRow = document.getElementById("form3-table").insertRow();
+        var IDCell = newRow.insertCell();
+        var courseID = student.getCoursesTaken()[c_id];
+        IDCell.innerHTML = courseID;
+        var gradeCell = newRow.insertCell();
+        grade_sel = addGradeSelector(c_id);
+        gradeCell.append(grade_sel);
+        var attrCell = newRow.insertCell();
+        attr_sel = addAttributeSelector(c_id);
+        attrCell.append(attr_sel);
+        var semCell = newRow.insertCell();
+        sem_y_sel = addSemesterYRSelector(c_id);
+        semCell.append(sem_y_sel);
+        sem_sm_sel = addSemesterSMSelector(c_id);
+        semCell.append(sem_sm_sel);
+        c_id += 1;
+    }
+}
+
+function addGradeSelector(id){
+    var grade_selector = document.createElement("select");
+    grade_selector.className = "form3_selector";
+    grade_selector.id = id;
+    var A = document.createElement("option");
+    A.innerHTML = "A";
+    A.value = 4.000;
+    var Am = document.createElement("option");
+    Am.innerHTML = "A-";
+    Am.value = 3.670;
+    var Bp = document.createElement("option");
+    Bp.innerHTML = "B+";
+    Bp.value = 3.330;
+    var B = document.createElement("option");
+    B.innerHTML = "B";
+    B.value = 3.000;
+    var Bm = document.createElement("option");
+    Bm.innerHTML = "B-";
+    Bm.value = 2.670;
+    var Cp = document.createElement("option");
+    Cp.innerHTML = "C+";
+    Cp.value = 2.330;
+    var C = document.createElement("option");
+    C.innerHTML = "C";
+    C.value = 2.000;
+    var F = document.createElement("option");
+    F.innerHTML = "F";
+    F.value = 0.000;
+    var I = document.createElement("option");
+    I.innerHTML = "I";
+    I.value = -1.000;
+    var P = document.createElement("option");
+    P.innerHTML = "P";
+    P.value = -2.000;
+    grade_selector.append(A); grade_selector.append(Am); grade_selector.append(Bp); grade_selector.append(B); grade_selector.append(Bm);
+    grade_selector.append(Cp); grade_selector.append(C); grade_selector.append(F); grade_selector.append(I); grade_selector.append(P);
+    return grade_selector;
+}
+
+function addAttributeSelector(id){
+    var att_selector = document.createElement("select");
+    att_selector.className = "form3_selector";
+    att_selector.id = id;
+    var n = document.createElement("option");
+    n.innerHTML = "None";
+    n.value = 0;
+    var w = document.createElement("option");
+    w.innerHTML = "Waived";
+    w.value = 1;
+    var t = document.createElement("option");
+    t.innerHTML = "Transfered";
+    t.value = 2;
+    att_selector.append(n); att_selector.append(w); att_selector.append(t); 
+    return att_selector;
+}
+
+function addSemesterYRSelector(id){
+    var yr_sel = document.createElement("select");
+    yr_sel.className = "form3_sem_sel";
+    yr_sel.id = id;
+    for(let i = -20; i < 1; i++){
+        var year = new Date().getFullYear() + i;
+        var option = document.createElement("option");
+        option.value = year;
+        option.innerHTML = year;
+        if(i==-4){option.selected = "selected";}
+        yr_sel.appendChild(option);
+    }
+    return yr_sel;
+}
+
+function addSemesterSMSelector(id){
+    var yr_sel = document.createElement("select");
+    yr_sel.className = "form3_sem_sel";
+    yr_sel.id = id;
+    var sp = document.createElement("option");
+    sp.innerHTML = "Spring";
+    sp.value = "SP";
+    var su = document.createElement("option");
+    su.innerHTML = "Summer";
+    su.value = "SM";
+    var f = document.createElement("option");
+    f.innerHTML = "Fall";
+    f.value = "F";
+    yr_sel.append(sp); yr_sel.append(su); yr_sel.append(f);
+    return yr_sel;
+}
+
 
 // --backToFormOne():--
 // Called from hitting the back button on form two. No need to do any more than

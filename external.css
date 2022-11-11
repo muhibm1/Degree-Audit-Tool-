@@ -296,3 +296,48 @@ th, td {
   font-size: 20px;
   font-weight: bold;
 }
+
+.drag_drop_container{
+  width: 75%;
+  background-color: peachpuff;
+  border: #e87500 solid 3px;
+  border-radius: 3px;
+  margin-right: 30px;
+}
+
+.drag_item {
+  width: 75%;
+  margin: auto;
+  background-color: white;
+  border: #e87500 solid 2px;
+  border-radius: 2px;
+  margin: 2px;
+}
+
+.drag_item:hover {
+  cursor: move;
+}
+
+.courseEntry {
+  width: 100%;
+  background: white;
+  font-family: 'Poppins', sans-serif;
+  border: 0;
+  outline: 0;
+  color: #333;
+  font-size: 20px;
+  margin: 3px;
+}
+
+.manual_entry_container{
+  margin: auto;
+  width: 75%;
+}
+
+.form3_selector {
+  width: 100%;
+}
+
+.form3_sem_sel {
+  width: 50%;
+}
