@@ -16,20 +16,20 @@ class Audit_Report{
 
 
 
-    audit_generatePDF(name, id, plan,major,track,coreGPA,electiveGPA,totalGPA,cores_taken,elective_taken,leveling_courses,outreq) {
+    audit_generatePDF(student, calculator) {
     
-        name =  getName();
-        id = getSID();
+        studentname =  student.getName();
+        id = student.getSID();
         plan = "Master";
         major = "Computer Science";
-        track = getDegreeTrackID();
-        coreGPA = getCoreGPA(); ;
-        electiveGPA = getElectiveGPA() ;
-        totalGPA = getTotalGPA();
-        cores_taken = getCoursesTaken();
-        elective_taken = getElectiveCoursesTaken();
-        leveling_courses = getLevelCoursesTaken();
-        outreq =  getOutStaningRequirements();
+        track = student.getDegreeTrackID();
+        coreGPA = student.getCoreGPA(); ;
+        electiveGPA = student.getElectiveGPA() ;
+        totalGPA = student.getTotalGPA();
+        cores_taken = student.getCoursesTaken();
+        elective_taken = student.getElectiveCoursesTaken();
+        leveling_courses = student.getLevelCoursesTaken();
+        outreq = calculator.getOutStaningRequirements();
     
         function dynamicText(name, id, plan, major, track, coreGPA, electiveGPA, totalGPA, cores_taken, elective_taken, leveling_courses, outreq){
             
@@ -78,11 +78,6 @@ class Audit_Report{
             .setFontSize(12)
             .text(0.5, 3.0, "Total GPA: " + totalGPA);
     
-            course_taken = cores_taken;
-            electives_taken = elective_taken;
-            leveling_courses_taken = leveling_courses;
-            outreq = outreq;
-    
             //dynamic sizing part of the audit report 
             longtext_cores_taken = cores_taken  
             longtext_electives_taken = electives_taken
@@ -121,7 +116,7 @@ class Audit_Report{
     
     
         }
-        dynamicText(name, id, plan, major, track, coreGPA, electiveGPA, totalGPA, cores_taken, elective_taken, leveling_courses, outreq);
+        dynamicText(studentname, id, plan, major, track, coreGPA, electiveGPA, totalGPA, cores_taken, elective_taken, leveling_courses, outreq);
     
         doc.save('Audit.pdf');
     

@@ -7,24 +7,14 @@
 
 // -- Program Objects --
 let db_handler = new DBInfo();
-//let pdf_parser = new PDFParser();
-//let gpa_calc = new GPACalculator();
-//let pdf_gen = new PDFGenerator();
+let gpa_calc = new GPA_Calculator();
+let audit_gen = new Audit_Report();
+let degree_gen = new Degree_Plan();
 let student = new Student("--", "--", "--", "--");
 
 // -- Code that runs on page execution.
 document.getElementById("main-body").style.opacity = 0.0;
 start_page();
-
-// --parseTranscript():--
-// This function is called when a transcript is uploaded on form 1.
-// Show a loading screen while this process is happening.
-// It should auto-populate all of the student information and return to form 1.
-function parseTranscript() {
-    showLoading();
-    // TODO: Parse transcript and populate student
-    hideLoading();
-}
 
 // --toFromTwo():--
 // This function is called when the "next" button on form 1 is pushed.
@@ -36,7 +26,6 @@ function toFormTwo() {
     student.setDegreeTrackID(document.getElementById("dtrack").value);
     student.setAdmittedSemester(document.getElementById("admit_y").value + document.getElementById("admit_s").value);
     student.setAnticipatedGraduation(document.getElementById("antigrad_y").value + document.getElementById("antigrad_s").value);
-    console.log(student);
     populateFormTwo();
     document.getElementById("formTwo").style.display = "inherit";
 }
@@ -111,10 +100,6 @@ function entryKeyPress(event, parent, input){
 // It performs the transition to form 3.
 function toFormThree() {
     document.getElementById("formTwo").style.display = "none";
-    console.log(document.getElementById("student_level_container").children);
-    console.log(document.getElementById("student_required_container").children);
-    console.log(document.getElementById("elective_entry").children);
-    console.log(document.getElementById("other_entry").children);
     for (const node of document.getElementById("student_level_container").children){
         var courseID = node.innerHTML;
         student.addLevelCourseTaken(courseID);
@@ -152,7 +137,6 @@ function toFormThree() {
             student.addCourseAttribute(0);
         }
     }
-    console.log(student.getCoursesTaken());
     populateFormThree();
     document.getElementById("formThree").style.display = "inherit";
 }
@@ -267,6 +251,53 @@ function addSemesterSMSelector(id){
     return yr_sel;
 }
 
+function fillStudentInfo_form3(){
+    const data_table = document.getElementById("form3-table");
+    const tableRows = data_table.rows.length;
+    for(var i = 1; i < tableRows; i++){
+        var currRow = data_table.rows.item(i).cells;
+        var courseID = currRow.item(0).innerHTML;
+        var courseGrade = currRow.item(1).children[0].value;
+        var courseAtt = currRow.item(2).children[0].value;
+        var sem_item = currRow.item(3).children;
+        var sem_yr = sem_item[0].value;
+        var sem_sem = sem_item[1].value;
+        var semesterTaken = sem_yr+sem_sem;
+        if(courseGrade == -2){
+            courseGrade = 0.000;
+            courseAtt = 3;
+        }
+        if(courseGrade == -1){
+            courseGrade = 0.000;
+        }
+        for(var j = 0; j < student.getCoursesTaken().length; j++){
+            if(student.getCoursesTaken()[j] == courseID){
+                student.setCourseGrade(j, courseGrade);
+                student.setCourseAttribute(j, courseAtt);
+                student.setCourseSemester(j, semesterTaken);
+            }
+        }
+        for(var j = 0; j < student.getLevelCoursesTaken().length; j++){
+            if(student.getLevelCoursesTaken()[j] == courseID){
+                student.setLevelCourseGrade(j, courseGrade);
+                student.setLevelCourseAttribute(j, courseAtt);
+            }
+        }
+        for(var j = 0; j < student.getCoreCoursesTaken().length; j++){
+            if(student.getCoreCoursesTaken()[j] == courseID){
+                student.setCoreCourseGrade(j, courseGrade);
+                student.setCoreCourseAttribute(j, courseAtt);
+            }
+        }
+        for(var j = 0; j < student.getElectiveCoursesTaken().length; j++){
+            if(student.getElectiveCoursesTaken()[j] == courseID){
+                student.setElectiveCourseGrade(j, courseGrade);
+                student.setElectiveCourseAttribute(j, courseAtt);
+            }
+        }
+    }
+}
+
 
 // --backToFormOne():--
 // Called from hitting the back button on form two. No need to do any more than
@@ -290,7 +321,9 @@ function backToFormTwo() {
 // This will transition over to the PDF viewer form of main.html once finished.
 function submitStudentInfo() {
     showLoading();
+    fillStudentInfo_form3();
     performCalculations();
+    //console.log(student);
     generatePDFs();
     hideLoading();
     //TODO: Transition to PDF Viewer
@@ -300,13 +333,18 @@ function submitStudentInfo() {
 // This function performs all of the GPA calculations and pushes them to the student object.
 // Called when submitting form 3.
 function performCalculations() {
-    //TODO: Call gpa calculation functions
+    student.setCoreGPA(gpa_calc.calculate_core_GPA(
+        student.getCoreCoursesTaken(), student.getCoreCourseGrades(), student.getCoreCourseAttributes()));
+    student.setElectiveGPA(gpa_calc.calculate_elective_GPA(
+        student.getElectiveCoursesTaken(), student.getElectiveCourseGrades(), student.getElectiveCourseAttributes()));
+    student.setTotalGPA(gpa_calc.calculate_total_GPA(
+        student.getCoursesTaken(), student.getCourseGrades(), student.getCourseAttributes()));
 }
 
 // --generatePDFs():--
 // This function calls the PDFGenerator functions to create PDFs from student information.
 function generatePDFs() {
-    //TODO: Call PDF generation functions
+    degree_gen.degreePlan_generatePDF(student);
 }
 
 // --postDB_pageUpdate():--
@@ -369,9 +407,6 @@ async function start_page() {
     postDB_pageUpdate();
     hideLoading();
     document.getElementById("main-body").style.opacity = 1.0;
-    console.log(db_handler.getCourseList());
-    console.log(db_handler.getDegreeTracks());
-    console.log(db_handler.getRequirements());
 }
 
 // --showLoading():--
@@ -415,8 +450,8 @@ document.getElementById("fileupload").addEventListener("change", function(event)
               return texts.join(' ');
             });
           });
-        hideLoading();
         student = parseText(returntask);
+        hideLoading();
     }
     filereader.readAsArrayBuffer(file);
 });

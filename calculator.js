@@ -1,7 +1,14 @@
 
-class GPA_Calculator extends Student{
+class GPA_Calculator {
+
     constructor(){
         this.outstanding_req = "";
+        this.core_credits = 0;
+        this.core_gpa = 0;
+        this.elective_credits = 0;
+        this.elective_gpa = 0;
+        this.total_credits = 0;
+        this.total_gpa = 0;
     }
     //get the list of outstanding required core courses
     getOutStaningRequirements(){
@@ -10,73 +17,49 @@ class GPA_Calculator extends Student{
 
     //gets the core gpa
     getCoreGPA(){
-        return this.core_GPA;
+        return this.core_gpa;
     }
 
- function calculate_core_GPA(cores_taken,core_grades,core_attributes){
+    calculate_core_GPA(cores_taken,core_grades,core_attributes){
         // Calculate the core GPA
-        var core_GPA = 0.000;
-        this.sum_core_GPA = 0;
-        var credit_holder = [];
-        this.core_total_credit_pts = 0;
-
-        cores_taken = cores_taken;
-        core_grades = core_grades;
-        core_attributes = core_attributes;
-
-        for(var i = 0; i < cores_taken.length-1; i++){
+        for(var i = 0; i < cores_taken.length; i++){
             if(core_attributes[i] == "0"){
-                credit_holder[i]= a1[i].charAt(3);
-                core_total_credit_pts =  core_total_credit_pts + Number(credit_holder[i]);
-
-                this.sum_core_GPA = sum_core_GPA + (core_grades[i]*Number(+a1[i].charAt(3)));
-              }
+                const nameLength = cores_taken[i].length;
+                var credit_holder = cores_taken[i].charAt(nameLength-3);
+                this.core_credits += Number(credit_holder);
+                this.core_gpa += (core_grades[i]*Number(credit_holder));
+            }
         
         }
-        core_GPA = sum_core_GPA / core_total_credit_pts;
-        return core_GPA.toFixed(3);
-        //console.log(core_GPA.toFixed(3));
- }
+        this.core_gpa /= this.core_credits;
+        return this.core_gpa.toFixed(3);
+    }
     
     calculate_elective_GPA(electives_taken,elective_grades,elective_attributes){
         // Calculate the core GPA
-        var elective_GPA = 0.000;
-        this.sum_elective_GPA = 0;
-        var credit_holder = [];
-        this.elective_total_credit_pts = 0;
-
-        electives_taken = electives_taken;
-        elective_grades = elective_grades;
-        elective_attributes = elective_attributes;
-
-        for(var i = 0; i < electives_taken.length-1; i++){
+        for(var i = 0; i < electives_taken.length; i++){
             if(elective_attributes[i] == "0"){
-                credit_holder[i]= a1[i].charAt(3);
-                elective_total_credit_pts =  elective_total_credit_pts + Number(credit_holder[i]);
-
-                this.sum_elective_GPA = sum_elective_GPA + (elective_grades[i]*Number(+a1[i].charAt(3)));
+                const nameLength = electives_taken[i].length;
+                var credit_holder = electives_taken[i].charAt(nameLength-3);
+                this.elective_credits += Number(credit_holder);
+                this.elective_gpa += (elective_grades[i]*Number(credit_holder));
             }
-
         }
-
-        elective_GPA = sum_elective_GPA / elective_total_credit_pts;
-        return elective_GPA.toFixed(3);
-        //console.log(elective_GPA.toFixed(3));
-
+        this.elective_gpa /= this.elective_credits;
+        return this.elective_gpa.toFixed(3);
     }
     
-     calculate_total_GPA(sum_core_GPA, sum_elective_GPA ,core_total_credit_pts, elective_total_credit_pts){
-        this.sum_core_GPA = sum_core_GPA;
-        this.sum_elective_GPA = sum_elective_GPA;
-        this.core_total_credit_pts = core_total_credit_pts;
-        this.elective_total_credit_pts = elective_total_credit_pts;
-        var total_GPA = 0.000;
-        var total_credit_pts = 0;
-        total_credit_pts = core_total_credit_pts + elective_total_credit_pts;
-        total_GPA = (sum_core_GPA + sum_elective_GPA) / total_credit_pts;
-
-        return total_GPA.toFixed(3);
-
+     calculate_total_GPA(coursesTaken, courseGrades, courseAttributes){
+        for(var i = 0; i < coursesTaken.length; i++){
+            if(courseAttributes[i] == "0"){
+                const nameLength = coursesTaken[i].length;
+                var credit_holder = coursesTaken[i].charAt(nameLength-3);
+                this.total_credits += Number(credit_holder);
+                this.total_gpa += (courseGrades[i]*Number(credit_holder));
+            }
+        }
+        this.total_gpa /= this.total_credits;
+        return this.total_gpa.toFixed(3);
      }         
     
      incomplete_requirements(total_required_courses,core_taken,core_attributes ){
@@ -84,8 +67,6 @@ class GPA_Calculator extends Student{
         core_taken = core_taken;
         core_attributes = core_attributes;
         core_gpa = getCoreGPA();
-
-
 
         for(var i = 0; i < core_attributes.length-1; i++){
 
