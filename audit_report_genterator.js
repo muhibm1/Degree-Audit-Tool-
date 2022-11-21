@@ -18,29 +18,29 @@ class Audit_Report{
 
     audit_generatePDF(student, calculator) {
     
-        studentname =  student.getName();
-        id = student.getSID();
-        plan = "Master";
-        major = "Computer Science";
-        track = student.getDegreeTrackID();
-        coreGPA = student.getCoreGPA(); ;
-        electiveGPA = student.getElectiveGPA() ;
-        totalGPA = student.getTotalGPA();
-        cores_taken = student.getCoursesTaken();
-        elective_taken = student.getElectiveCoursesTaken();
-        leveling_courses = student.getLevelCoursesTaken();
-        outreq = calculator.getOutStaningRequirements();
+        var studentname =  student.getName();
+        var id = student.getSID();
+        var plan = "Master";
+        var major = "Computer Science";
+        var track = student.getDegreeTrackID();
+        var coreGPA = student.getCoreGPA(); ;
+        var electiveGPA = student.getElectiveGPA() ;
+        var totalGPA = student.getTotalGPA();
+        var cores_taken = student.getCoursesTaken();
+        var elective_taken = student.getElectiveCoursesTaken();
+        var leveling_courses = student.getLevelCoursesTaken();
+        var outreq = calculator.getOutStaningRequirements();
     
         function dynamicText(name, id, plan, major, track, coreGPA, electiveGPA, totalGPA, cores_taken, elective_taken, leveling_courses, outreq){
             
-            name = name;
-            id = id;
-            plan = plan;
-            major = major;
-            track = track;
-            coreGPA = coreGPA;
-            electiveGPA = electiveGPA;
-            totalGPA = totalGPA;
+            var name = name;
+            var id = id;
+            var plan = plan;
+            var major = major;
+            var track = track;
+            var coreGPA = coreGPA;
+            var electiveGPA = electiveGPA;
+            var totalGPA = totalGPA;
     
             doc.setFont('Calibri(Body)', 'bold')
             .setFontSize(12)
