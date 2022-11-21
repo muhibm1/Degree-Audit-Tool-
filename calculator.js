@@ -68,18 +68,18 @@ class GPA_Calculator {
         var core_attributes = core_attributes;
         var core_gpa = getCoreGPA();
 
-        for(var i = 0; i < core_attributes.length-1; i++){
+    for(var i = 0; i < core_attributes.length-1; i++){
 
-            if(core_attributes[i] == "0"){
-                if(core_grades[i] <= 73){
-                core_taken.splice(i,1);
-                core_grades.splice(i,1);
-                core_attributes.splice(i,1);
-                i =0;
-                }
+        if(core_attributes[i] == 0){
+            if(core_grades[i] < 2.000){
+            core_taken.splice(i,1);
+            core_grades.splice(i,1);
+            core_attributes.splice(i,1);
+            i =0;
             }
+        }
 
-        } 
+    }  
 
         let difference = total_required_courses.filter(x => !core_taken.includes(x));
 
