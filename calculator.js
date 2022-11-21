@@ -63,10 +63,10 @@ class GPA_Calculator {
      }         
     
      incomplete_requirements(total_required_courses,core_taken,core_attributes ){
-        total_required_courses = total_required_courses;
-        core_taken = core_taken;
-        core_attributes = core_attributes;
-        core_gpa = getCoreGPA();
+        var total_required_courses = total_required_courses;
+        var core_taken = core_taken;
+        var core_attributes = core_attributes;
+        var core_gpa = getCoreGPA();
 
         for(var i = 0; i < core_attributes.length-1; i++){
 
