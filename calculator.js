@@ -68,7 +68,7 @@ class GPA_Calculator {
         var core_attributes = core_attributes;
         var core_gpa = getCoreGPA();
 
-    for(var i = 0; i < core_attributes.length-1; i++){
+    for(var i = 0; i < core_attributes.length; i++){
 
         if(core_attributes[i] == 0){
             if(core_grades[i] < 2.000){
