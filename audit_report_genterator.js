@@ -1,5 +1,5 @@
 class Audit_Report{
-
+   
 
     getName(){ return this.name; }
     getSID(){ return this.sid; }
@@ -17,7 +17,9 @@ class Audit_Report{
 
 
     audit_generatePDF(student, calculator) {
-    
+        
+        const { jsPDF } = window.jspdf;
+        var doc = new jsPDF('p', 'in', 'a4');
         var studentname =  student.getName();
         var id = student.getSID();
         var plan = "Master";
@@ -27,11 +29,11 @@ class Audit_Report{
         var electiveGPA = student.getElectiveGPA() ;
         var totalGPA = student.getTotalGPA();
         var cores_taken = student.getCoursesTaken();
-        var elective_taken = student.getElectiveCoursesTaken();
+        var electives_taken = student.getElectiveCoursesTaken();
         var leveling_courses = student.getLevelCoursesTaken();
         var outreq = calculator.getOutStaningRequirements();
     
-        function dynamicText(name, id, plan, major, track, coreGPA, electiveGPA, totalGPA, cores_taken, elective_taken, leveling_courses, outreq){
+        function dynamicText(name, id, plan, major, track, coreGPA, electiveGPA, totalGPA, cores_taken, electives_taken, leveling_courses, outreq){
             
             var name = name;
             var id = id;
@@ -41,10 +43,13 @@ class Audit_Report{
             var coreGPA = coreGPA;
             var electiveGPA = electiveGPA;
             var totalGPA = totalGPA;
+            var cores_taken = cores_taken;
+            var electives_taken = electives_taken;
+            var leveling_courses = leveling_courses;
     
             doc.setFont('Calibri(Body)', 'bold')
             .setFontSize(12)
-            .text(4.25, 1.0, "Audit Report ", align = 'center');
+            .text(3.75, 1.0, "Audit Report ");
     
             doc.setFont('Calibri(Body)', 'normal')
             .setFontSize(12)
@@ -79,27 +84,27 @@ class Audit_Report{
             .text(0.5, 3.0, "Total GPA: " + totalGPA);
     
             //dynamic sizing part of the audit report 
-            longtext_cores_taken = cores_taken  
-            longtext_electives_taken = electives_taken
-            longtext_leveling_courses_taken = leveling_courses_taken
-            longtext_outreq = outreq
+            var longtext_cores_taken = cores_taken  
+            var longtext_electives_taken = electives_taken
+            var longtext_leveling_courses_taken = leveling_courses
+            var longtext_outreq = outreq
     
     
             
     
-            textlines1 = doc.setFont('Calibri(Body)')
+            var textlines1 = doc.setFont('Calibri(Body)')
             .setFontSize(12)
             .splitTextToSize("Core Courses: " + longtext_cores_taken + "\n",7.25);
     
-            textlines2 = doc.setFont('Calibri(Body)')
+            var textlines2 = doc.setFont('Calibri(Body)')
             .setFontSize(12)
             .splitTextToSize("Elective Courses: " + longtext_electives_taken + "\n",7,25);
     
-            textlines3 = doc.setFont('Calibri(Body)')
+            var textlines3 = doc.setFont('Calibri(Body)')
             .setFontSize(12)
             .splitTextToSize("Leveling Courses:\n" + longtext_leveling_courses_taken + "\n",7.25);
             
-            textlines4 = doc.setFont('Calibri(Body)')
+            var textlines4 = doc.setFont('Calibri(Body)')
             .setFontSize(12)
             .splitTextToSize("Outstanding Requirements:\n" + longtext_outreq,7.25);
             
@@ -116,7 +121,7 @@ class Audit_Report{
     
     
         }
-        dynamicText(studentname, id, plan, major, track, coreGPA, electiveGPA, totalGPA, cores_taken, elective_taken, leveling_courses, outreq);
+        dynamicText(studentname, id, plan, major, track, coreGPA, electiveGPA, totalGPA, cores_taken, electives_taken, leveling_courses, outreq);
     
         doc.save('Audit.pdf');
     
