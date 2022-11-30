@@ -59,7 +59,8 @@ class Degree_Plan {
         elective_course_grades = elective_course_grades;
         elective_course_attributes = elective_course_attributes;*/
 
-        var doc = new jsPDF();
+        const { jsPDF } = window.jspdf;
+        var doc = new jsPDF('p', 'in', 'a4');
 
         doc.setFont('Calibri(Body)', 'bold')
         .setFontSize(12)
