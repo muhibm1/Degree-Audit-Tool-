@@ -8,16 +8,6 @@ function parseText(rawText){
     * To be the most successful for this part: make sure you create variables similar to what is seen in the "student.js"
     * file and be able to parse that information out from the text in some manner. Then, make sure you follow the constructor
     * and the getters/setters found in the "student.js" file.
-    */
-    
-    //rawText - The text that comes from the transcript, shown on the main page when a transcript is uploaded.
-
-    /*
-    * Goal: Take the text and parse it into an instance of a student object. The student object will then be returned
-    * from this function. You are given the text as the variable "rawText", it is a String.
-    * To be the most successful for this part: make sure you create variables similar to what is seen in the "student.js"
-    * file and be able to parse that information out from the text in some manner. Then, make sure you follow the constructor
-    * and the getters/setters found in the "student.js" file.
     */ 
     var rawText = rawText;
   
@@ -140,34 +130,34 @@ function parseText(rawText){
     
       for(j=0;j < letterGrades.length;j++){
         if(letterGrades[j] == "A"){
-          this.studentGrades.push("4.000");
+          this.studentGrades.push(4.000);
         }
         if(letterGrades[j] == "A-"){
-          this.studentGrades.push("3.670");
+          this.studentGrades.push(3.670);
         }
         if(letterGrades[j] == "B+"){
-          this.studentGrades.push("3.330");
+          this.studentGrades.push(3.330);
         }
         if(letterGrades[j] == "B"){
-          this.studentGrades.push("3.000");
+          this.studentGrades.push(3.000);
         }
         if(letterGrades[j] == "B-"){
-          this.studentGrades.push("2.670");
+          this.studentGrades.push(2.670);
         }
         if(letterGrades[j] == "C+"){
-          this.studentGrades.push("2.330");
+          this.studentGrades.push(2.330);
         }
         if(letterGrades[j] == "C"){
-          this.studentGrades.push("2.000");
+          this.studentGrades.push(2.000);
         }
         if(letterGrades[j] == "F"){
-          this.studentGrades.push("0.000");
+          this.studentGrades.push(0.000);
         }
         if(letterGrades[j] == "I"){
           this.studentGrades.push("Incomplete");
         }
         if(letterGrades[j] == "P"){
-          this.studentGrades.push("0.000");
+          this.studentGrades.push(0.000);
         }
         if(letterGrades[j] == "IP"){
           this.studentGrades.push("IP");
@@ -338,29 +328,60 @@ function parseText(rawText){
           
         }
       }
-      return this.semesters;
+
+      newText = rawText.split("Good Standing");
+      this.countClasses = [];
+      this.totalSemesters = [];
+      //console.log(newText);
+  
+
+      for(j=0; j < newText.length; j++){
+        var temp = String(newText[j]);
+        var count = (temp.match(/Instructor/g) || []).length;
+        this.countClasses.push(count);
+      }
+      //console.log(this.countClasses);
+      for(k=0; k < this.semesters.length;k++){
+        for(p=0; p < this.countClasses.length;p++){
+          this.totalSemesters.push(this.semesters[k]);
+        }
+      }
+      //console.log(this.totalSemesters);
+      //setCourseSemesters(this.semesters);
+      console.log(this.totalSemesters);
+      return this.totalSemesters;
+      
     }
 
-    function pushUTDClassInfo(takenAtUTD,utdClassGrades,transferList,transferGradeList){
-      console.log(takenAtUTD);
-      console.log(utdClassGrades);
-      console.log(transferList);
-      console.log(transferGradeList);
+    function pushUTDClassInfo(takenAtUTD,utdClassGrades,transferList,transferGradeList,Sems){
+      //console.log(takenAtUTD);
+      //console.log(utdClassGrades);
+      //console.log(transferList);
+      //console.log(transferGradeList);
       var classAttributes= [];
     
       for(i = 0; i < utdClassGrades.length; i++){
         if(utdClassGrades[i] == "IP"){
           takenAtUTD.splice(i,1);
           utdClassGrades.splice(i,1);
+          Sems.splice(i,1);
           i =0;
         }
       }
     
     
       for(k = 0; k < takenAtUTD.length; k++){
-        student.addCourseTaken(takenAtUTD[k]);
-        student.addCourseGrade(utdClassGrades[k]);
-        student.addCourseAttribute("0");
+        if(utdClassGrades[k] == 0.000){
+          student.addCourseAttribute("3");
+          student.addCourseGrade(utdClassGrades[k]);
+          student.addCourseTaken(takenAtUTD[k]);
+          student.addCourseSemester(Sems[k]);
+        } else{
+          student.addCourseTaken(takenAtUTD[k]);
+          student.addCourseGrade(utdClassGrades[k]);
+          student.addCourseAttribute("0");
+          student.addCourseSemester(Sems[k]);
+        }
       }
 
       if(transferList.length != 0 && transferGradeList.length != 0){
@@ -372,12 +393,7 @@ function parseText(rawText){
       }
     }
 
-    function pushCourseSemester(semList){
-      for(i=0; i < this.semesters.length; i++){
-        student.addCourseSemester(semList[i]);
-      }
-
-    }
+    
   
 
       var sName = studentName(rawText);
@@ -392,8 +408,9 @@ function parseText(rawText){
       var student = new Student(this.name, this.sid, "anti_grad", this.admittedSemester);
       
       
-      pushUTDClassInfo(this.classes, this.studentGrades, this.transferClasses, this.transferClassGrades);
-      pushCourseSemester(this.semesters);
+      pushUTDClassInfo(this.classes, this.studentGrades, this.transferClasses, this.transferClassGrades, this.totalSemesters);
+      //pushCourseSemester(this.totalSemesters);
+
     
     //Populate the student object using setters found in student.js console.log(student) to check
     //console.log(rawText);
