@@ -54,6 +54,7 @@ function populateFormTwo(){
     addDropEvt(document.getElementById("student_required_container"));
     addDropEvt(document.getElementById("degree_level_container"));
     addDropEvt(document.getElementById("degree_required_container"));
+    event.preventDefault();
 }
 
 function add_drag_evt(p){
@@ -305,6 +306,7 @@ function fillStudentInfo_form3(){
 function backToFormOne() {
     document.getElementById("formTwo").style.display = "none";
     document.getElementById("formOne").style.display = "inherit";
+   location.reload(toFormTwo);
 }
 
 // --backToFormTwo():--
@@ -313,6 +315,7 @@ function backToFormOne() {
 function backToFormTwo() {
     document.getElementById("formThree").style.display = "none";
     document.getElementById("formTwo").style.display = "inherit";
+    location.reload(toFormThree);
 }
 
 // --submit_student_info():--
