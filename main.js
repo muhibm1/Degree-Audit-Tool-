@@ -339,6 +339,8 @@ function performCalculations() {
         student.getElectiveCoursesTaken(), student.getElectiveCourseGrades(), student.getElectiveCourseAttributes()));
     student.setTotalGPA(gpa_calc.calculate_total_GPA(
         student.getCoursesTaken(), student.getCourseGrades(), student.getCourseAttributes()));
+    var total_core_req = db_handler.getDegreeTracks()[student.getDegreeTrackID() - 1]['req_courses'];
+    gpa_calc.incomplete_requirements(total_core_req, student.getCoreCoursesTaken(), student.getCoreCourseAttributes(), student.getCoreCourseGrades());
 }
 
 // --generatePDFs():--
