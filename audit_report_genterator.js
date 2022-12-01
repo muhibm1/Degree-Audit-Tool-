@@ -1,19 +1,8 @@
+
 class Audit_Report{
    
 
-    getName(){ return this.name; }
-    getSID(){ return this.sid; }
-    getDegreeTrackID(){ return this.degree_track; }
-    getCoreGPA(){ return this.core_GPA; }
-    getElectiveGPA(){ return this.elective_GPA; }
-    getTotalGPA(){ return this.total_GPA; }
-    getCoursesTaken(){ return this.courses_taken; }
-    getCoreCoursesTaken(){ return this.core_taken; }
-    getElectiveCoursesTaken(){ return this.elective_taken; }
-    getLevelCoursesTaken(){ return this.level_taken; }
-    getOutStaningRequirements(){return this.outstanding_req;}
-
-
+  
 
 
     audit_generatePDF(student, calculator) {
@@ -28,10 +17,10 @@ class Audit_Report{
         var coreGPA = student.getCoreGPA(); ;
         var electiveGPA = student.getElectiveGPA() ;
         var totalGPA = student.getTotalGPA();
-        var cores_taken = student.getCoursesTaken();
+        var cores_taken = student.getCoreCoursesTaken();
         var electives_taken = student.getElectiveCoursesTaken();
         var leveling_courses = student.getLevelCoursesTaken();
-        var outreq = calculator.getOutStaningRequirements();
+        var outreq = calculator.getOutStaningRequirements() ;
     
         function dynamicText(name, id, plan, major, track, coreGPA, electiveGPA, totalGPA, cores_taken, electives_taken, leveling_courses, outreq){
             
@@ -46,6 +35,7 @@ class Audit_Report{
             var cores_taken = cores_taken;
             var electives_taken = electives_taken;
             var leveling_courses = leveling_courses;
+           
     
             doc.setFont('Calibri(Body)', 'bold')
             .setFontSize(12)
@@ -129,3 +119,4 @@ class Audit_Report{
     }
 
 }
+
