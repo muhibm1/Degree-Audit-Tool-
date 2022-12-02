@@ -350,7 +350,7 @@ function performCalculations() {
 // This function calls the PDFGenerator functions to create PDFs from student information.
 function generatePDFs() {
     degree_gen.degreePlan_generatePDF(student);
-    audit_gen.audit_generatePDF(student, calculator);
+    audit_gen.audit_generatePDF(student, gpa_calc);
 }
 
 // --postDB_pageUpdate():--
