@@ -113,10 +113,7 @@ class Audit_Report{
         }
         dynamicText(studentname, id, plan, major, track, coreGPA, electiveGPA, totalGPA, cores_taken, electives_taken, leveling_courses, outreq);
     
-        doc.save('Audit.pdf');
-    
-    
+        return doc;
     }
-
 }
 

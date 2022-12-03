@@ -158,9 +158,6 @@ class Degree_Plan {
         verticalOffset += (textlines3.length + 0.5) * 12/72;
         doc.text(0.5, verticalOffset + 12/72, textlines4);
     
-        doc.output('dataurlnewwindow');
-    
-    
+        return doc;
     }
-
 }

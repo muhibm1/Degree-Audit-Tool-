@@ -11,6 +11,8 @@ let gpa_calc = new GPA_Calculator();
 let audit_gen = new Audit_Report();
 let degree_gen = new Degree_Plan();
 let student = new Student("--", "--", "--", "--");
+let degreePlanPDF = null
+let auditReportPDF = null
 
 // -- Code that runs on page execution.
 document.getElementById("main-body").style.opacity = 0.0;
@@ -391,6 +393,8 @@ function submitStudentInfo() {
     fillStudentInfo_form3();
     performCalculations();
     generatePDFs();
+    document.getElementById("formThree").style.display = "none";
+    document.getElementById("pdfViewer").style.display = "inherit";
     hideLoading();
     //TODO: Transition to PDF Viewer
 }
@@ -412,8 +416,8 @@ function performCalculations() {
 // --generatePDFs():--
 // This function calls the PDFGenerator functions to create PDFs from student information.
 function generatePDFs() {
-    degree_gen.degreePlan_generatePDF(student);
-    audit_gen.audit_generatePDF(student, gpa_calc);
+    degreePlanPDF = degree_gen.degreePlan_generatePDF(student);
+    auditReportPDF = audit_gen.audit_generatePDF(student, gpa_calc);
 }
 
 // --postDB_pageUpdate():--
@@ -540,3 +544,16 @@ document.getElementById("fileupload").addEventListener("change", function(event)
     }
     filereader.readAsArrayBuffer(file);
 });
+
+function viewDegreePDF(){
+    degreePlanPDF.output('dataurlnewwindow');
+}
+function viewAuditPDF(){
+    auditReportPDF.output('dataurlnewwindow');
+}
+function downloadDegreePDF(){
+    degreePlanPDF.save('DegreePlan.pdf');
+}
+function downloadAuditPDF(){
+    auditReportPDF.save('AuditReport.pdf');
+}

@@ -341,3 +341,8 @@ th, td {
 .form3_sem_sel {
   width: 50%;
 }
+
+.pdfViewer {
+  width: 50%;
+  margin: auto;
+}
