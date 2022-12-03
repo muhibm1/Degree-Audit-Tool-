@@ -39,6 +39,8 @@ function populateFormTwo(){
         list_item.innerHTML = courseID;
         list_item.classList.add("drag_item");
         list_item.draggable = "true";
+        document.getElementById("student_level_container").append(student.getLevelCoursesTaken());
+        console.log(student.getLevelCoursesTaken());
         document.getElementById("degree_level_container").append(list_item);
         add_drag_evt(list_item);
     });
@@ -47,6 +49,8 @@ function populateFormTwo(){
         list_item.innerHTML = courseID;
         list_item.classList.add("drag_item");
         list_item.draggable = "true";
+        document.getElementById("student_required_container").append(student.getCoreCoursesTaken());
+        //console.log(student.getCoreCoursesTaken());
         document.getElementById("degree_required_container").append(list_item);
         add_drag_evt(list_item);
     });
@@ -457,6 +461,14 @@ document.getElementById("fileupload").addEventListener("change", function(event)
             });
           });
         student = parseText(returntask);
+        console.log(student);
+        document.getElementById("sname").value=student.getName();
+        document.getElementById("sid").value=student.getSID();
+        /*The two lines below are not working becuase the main.html has "admit_y" and "admit_sem"
+         where as in student,js and transcriptparser.js, both those functions are getting parsed together as a singular string*/
+        document.getElementById("admit_y").value=student.getAdmittedSemester();
+        document.getElementById("antigrad_y").value=student.getAnticipatedGraduation();
+        //REGEX code to exctract number from string "=str.match(/(\d+)/)";
         hideLoading();
     }
     filereader.readAsArrayBuffer(file);
