@@ -31,17 +31,35 @@ function toFormTwo() {
 }
 
 function populateFormTwo(){
+    document.getElementById("student_level_container").innerHTML = "";
+    document.getElementById("student_required_container").innerHTML = "";
+    document.getElementById("degree_level_container").innerHTML = "";
+    document.getElementById("degree_required_container").innerHTML = "";
+    document.getElementById("elective_entry").innerHTML = '<input type="text" placeholder="CSXXXX" id="elective_courseEntry" class="courseEntry" autocomplete="off"onkeydown="entryKeyPress(event, document.getElementById("elective_entry"), this);">';
+    document.getElementById("other_entry").innerHTML = '<input type="text" placeholder="CSXXXX" id="other_courseEntry" class="courseEntry" autocomplete="off"onkeydown="entryKeyPress(event, document.getElementById("other_entry"), this);">';
     let degree = db_handler.getDegreeTracks()[student.getDegreeTrackID()-1];
     let level_courses = degree['level_courses'];
     let core_courses = degree['req_courses'];
+    let total_courses_taken = student.getCoursesTaken().slice();
     level_courses.forEach(courseID => {
         let list_item = document.createElement('p');
         list_item.innerHTML = courseID;
         list_item.classList.add("drag_item");
         list_item.draggable = "true";
-        document.getElementById("student_level_container").append(student.getLevelCoursesTaken());
-        console.log(student.getLevelCoursesTaken());
-        document.getElementById("degree_level_container").append(list_item);
+        let courseTaken = false;
+        for(let i = 0; i < student.getCoursesTaken().length; i++){
+            if(student.getCoursesTaken()[i] == courseID){
+                courseTaken = true;
+                document.getElementById("student_level_container").append(list_item);
+                var index = total_courses_taken.indexOf(courseID);
+                if (index !== -1) {
+                    total_courses_taken.splice(index, 1);
+                }
+            }
+        }
+        if(!courseTaken){
+            document.getElementById("degree_level_container").append(list_item);
+        }
         add_drag_evt(list_item);
     });
     core_courses.forEach(courseID => {
@@ -49,15 +67,40 @@ function populateFormTwo(){
         list_item.innerHTML = courseID;
         list_item.classList.add("drag_item");
         list_item.draggable = "true";
-        document.getElementById("student_required_container").append(student.getCoreCoursesTaken());
-        //console.log(student.getCoreCoursesTaken());
-        document.getElementById("degree_required_container").append(list_item);
+        let courseTaken = false;
+        for(let i = 0; i < student.getCoursesTaken().length; i++){
+            if(student.getCoursesTaken()[i] == courseID){
+                courseTaken = true;
+                document.getElementById("student_required_container").append(list_item);
+                var index = total_courses_taken.indexOf(courseID);
+                if (index !== -1) {
+                    total_courses_taken.splice(index, 1);
+                }
+            }
+        }
+        if(!courseTaken){
+            document.getElementById("degree_required_container").append(list_item);
+        }
         add_drag_evt(list_item);
     });
     addDropEvt(document.getElementById("student_level_container"));
     addDropEvt(document.getElementById("student_required_container"));
     addDropEvt(document.getElementById("degree_level_container"));
     addDropEvt(document.getElementById("degree_required_container"));
+    if(total_courses_taken.length > 0){
+        document.getElementById('elective_courseEntry').value = total_courses_taken[0];
+        for(let k = 1; k < total_courses_taken.length; k++){
+            var newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.placeholder = "CSXXXX";
+            newInput.id = "elective_courseEntry";
+            newInput.className = "courseEntry";
+            newInput.autocomplete = "off";
+            newInput.value = total_courses_taken[k];
+            newInput.addEventListener("keydown", function(event){ entryKeyPress(event, document.getElementById('elective_entry'), newInput); });
+            document.getElementById('elective_entry').appendChild(newInput);
+        }
+    }
     event.preventDefault();
 }
 
@@ -107,39 +150,53 @@ function toFormThree() {
     document.getElementById("formTwo").style.display = "none";
     for (const node of document.getElementById("student_level_container").children){
         var courseID = node.innerHTML;
-        student.addLevelCourseTaken(courseID);
-        student.addLevelCourseGrade(0.000);
-        student.addLevelCourseAttribute(0);
-        student.addCourseTaken(courseID);
-        student.addCourseGrade(0.000);
-        student.addCourseAttribute(0);
+        if(!student.getLevelCoursesTaken().includes(courseID)){
+            student.addLevelCourseTaken(courseID);
+            student.addLevelCourseGrade(4.000);
+            student.addLevelCourseAttribute(0);
+        }
+        if(!student.getCoursesTaken().includes(courseID)){
+            student.addCourseTaken(courseID);
+            student.addCourseGrade(4.000);
+            student.addCourseAttribute(0);
+        }
     }
     for (const node of document.getElementById("student_required_container").children){
         var courseID = node.innerHTML;
-        student.addCoreCourseTaken(courseID);
-        student.addCoreCourseGrade(0.000);
-        student.addCoreCourseAttribute(0);
-        student.addCourseTaken(courseID);
-        student.addCourseGrade(0.000);
-        student.addCourseAttribute(0);
+        if(!student.getCoreCoursesTaken().includes(courseID)){
+            student.addCoreCourseTaken(courseID);
+            student.addCoreCourseGrade(4.000);
+            student.addCoreCourseAttribute(0);
+        }
+        if(!student.getCoursesTaken().includes(courseID)){
+            student.addCourseTaken(courseID);
+            student.addCourseGrade(4.000);
+            student.addCourseAttribute(0);
+        }
     }
     for (const node of document.getElementById("elective_entry").children){
         if(node.value != ""){
             var courseID = node.value;
-            student.addElectiveCourseTaken(courseID);
-            student.addElectiveCourseGrade(0.000);
-            student.addElectiveCourseTaken(0);
-            student.addCourseTaken(courseID);
-            student.addCourseGrade(0.000);
-            student.addCourseAttribute(0);
+            if(!student.getElectiveCoursesTaken().includes(courseID)){
+                student.addElectiveCourseTaken(courseID);
+                student.addElectiveCourseGrade(4.000);
+                student.addElectiveCourseAttribute(0);
+            }
+            if(!student.getCoursesTaken().includes(courseID)){
+                student.addCourseTaken(courseID);
+                student.addCourseGrade(4.000);
+                student.addCourseAttribute(0);
+            }
         }
     }
     for (const node of document.getElementById("other_entry").children){
         if(node.value != ""){
             var courseID = node.value;
-            student.addCourseTaken(courseID);
-            student.addCourseGrade(0.000);
-            student.addCourseAttribute(0);
+            if(!student.getCoursesTaken().includes(courseID)){
+                student.addCourseTaken(courseID);
+                student.addCourseGrade(4.000);
+                student.addCourseAttribute(0);
+            }
         }
     }
     populateFormThree();
@@ -147,6 +204,7 @@ function toFormThree() {
 }
 
 function populateFormThree(){
+    document.getElementById("form3-table").innerHTML = "<tr><th>Course</th><th>Grade</th><th>Waive/Transfer</th><th>Semester Taken</th></tr>";
     var c_id = 0;
     for(const course in student.getCoursesTaken()){
         var newRow = document.getElementById("form3-table").insertRow();
@@ -155,14 +213,18 @@ function populateFormThree(){
         IDCell.innerHTML = courseID;
         var gradeCell = newRow.insertCell();
         grade_sel = addGradeSelector(c_id);
+        grade_sel.value = student.getCourseGrades()[c_id];
         gradeCell.append(grade_sel);
         var attrCell = newRow.insertCell();
         attr_sel = addAttributeSelector(c_id);
+        attr_sel.value = student.getCourseAttributes()[c_id];
         attrCell.append(attr_sel);
         var semCell = newRow.insertCell();
         sem_y_sel = addSemesterYRSelector(c_id);
+        sem_y_sel.value = student.getCourseSemesters()[c_id].substring(0,4);
         semCell.append(sem_y_sel);
         sem_sm_sel = addSemesterSMSelector(c_id);
+        sem_sm_sel.value = student.getCourseSemesters()[c_id].substring(4);
         semCell.append(sem_sm_sel);
         c_id += 1;
     }
@@ -245,13 +307,13 @@ function addSemesterSMSelector(id){
     yr_sel.id = id;
     var sp = document.createElement("option");
     sp.innerHTML = "Spring";
-    sp.value = "SP";
+    sp.value = "Spring";
     var su = document.createElement("option");
     su.innerHTML = "Summer";
-    su.value = "SM";
+    su.value = "Summer";
     var f = document.createElement("option");
     f.innerHTML = "Fall";
-    f.value = "F";
+    f.value = "Fall";
     yr_sel.append(sp); yr_sel.append(su); yr_sel.append(f);
     return yr_sel;
 }
@@ -310,7 +372,6 @@ function fillStudentInfo_form3(){
 function backToFormOne() {
     document.getElementById("formTwo").style.display = "none";
     document.getElementById("formOne").style.display = "inherit";
-   location.reload(toFormTwo);
 }
 
 // --backToFormTwo():--
@@ -319,7 +380,6 @@ function backToFormOne() {
 function backToFormTwo() {
     document.getElementById("formThree").style.display = "none";
     document.getElementById("formTwo").style.display = "inherit";
-    location.reload(toFormThree);
 }
 
 // --submit_student_info():--
@@ -330,7 +390,6 @@ function submitStudentInfo() {
     showLoading();
     fillStudentInfo_form3();
     performCalculations();
-    //console.log(student);
     generatePDFs();
     hideLoading();
     //TODO: Transition to PDF Viewer
@@ -392,20 +451,28 @@ function postDB_pageUpdate() {
     }
     var falloption = document.createElement("option");
     falloption.innerHTML = "Fall";
-    falloption.value = "F";
-    var spoption = document.createElement("option");
-    spoption.innerHTML = "Spring";
-    spoption.value = "S";
+    falloption.value = "Fall";
+    var springoption = document.createElement("option");
+    springoption.innerHTML = "Spring";
+    springoption.value = "Sprint";
+    var summeroption = document.createElement("option");
+    summeroption.innerHTML = "Summer";
+    summeroption.value = "Summer";
+    document.getElementById("admit_s").appendChild(springoption);
+    document.getElementById("admit_s").appendChild(summeroption);
     document.getElementById("admit_s").appendChild(falloption);
-    document.getElementById("admit_s").appendChild(spoption);
     var falloption = document.createElement("option");
     falloption.innerHTML = "Fall";
-    falloption.value = "F";
+    falloption.value = "Fall";
     var spoption = document.createElement("option");
     spoption.innerHTML = "Spring";
-    spoption.value = "S";
-    document.getElementById("antigrad_s").appendChild(falloption);
+    spoption.value = "Spring";
+    var summeroption = document.createElement("option");
+    summeroption.innerHTML = "Summer";
+    summeroption.value = "Summer";
     document.getElementById("antigrad_s").appendChild(spoption);
+    document.getElementById("antigrad_s").appendChild(summeroption);
+    document.getElementById("antigrad_s").appendChild(falloption);
 }
 
 // --start_page():--
@@ -464,11 +531,11 @@ document.getElementById("fileupload").addEventListener("change", function(event)
         console.log(student);
         document.getElementById("sname").value=student.getName();
         document.getElementById("sid").value=student.getSID();
-        /*The two lines below are not working becuase the main.html has "admit_y" and "admit_sem"
-         where as in student,js and transcriptparser.js, both those functions are getting parsed together as a singular string*/
-        document.getElementById("admit_y").value=student.getAdmittedSemester();
-        document.getElementById("antigrad_y").value=student.getAnticipatedGraduation();
-        //REGEX code to exctract number from string "=str.match(/(\d+)/)";
+        document.getElementById("admit_y").value=student.getAdmittedSemester().substring(0,4);
+        document.getElementById("admit_s").value=student.getAdmittedSemester().substring(4);
+        document.getElementById("transcript_status").innerHTML = "Transcript Uploaded. Please check over all student information to ensure accuracy."
+        document.getElementById("transcript_status").style.color = "red";
+        document.getElementById("transcript_status").style.fontSize = "20px";
         hideLoading();
     }
     filereader.readAsArrayBuffer(file);

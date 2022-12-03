@@ -2,14 +2,14 @@ class Student {
     constructor(name, sid, anticipated_grad, admitted_sem){
         this.name = name; //String
         this.sid = sid; //String
-        this.anticipated_grad = anticipated_grad; //String
-        this.admitted_sem = admitted_sem; //String
+        this.anticipated_grad = anticipated_grad; //String in the form YYYYSpring, YYYYFall, or YYYYSummer
+        this.admitted_sem = admitted_sem; //String in the form YYYYSpring, YYYYFall, or YYYYSummer
         this.degree_track = 0; //Integer
         this.courses_taken = []; //List of Strings in the format "CSXXXX"
         this.course_grades = []; //List of floating-point decimals
         this.course_attributes = []; //List of Integers
             //Attribute References: 0=Taken at UTD, Standard; 1=Waived; 2=Transfered; 3=Pass in P/F
-        this.course_semesters = [];  //List of Strings in the format "YYYYS or YYYYF"
+        this.course_semesters = [];  //List of Strings in the format "YYYYSpring, YYYYFall, or YYYYSummer"
         this.level_taken = [];  //List of Strings in the format "CSXXXX"
         this.level_grades = []; //List of floating-point decimals
         this.level_attributes = []; //List of Integers
