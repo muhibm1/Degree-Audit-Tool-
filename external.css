@@ -290,7 +290,7 @@ th, td {
 }
 
 .adminForm {
-  width: 75%;
+  width: 50%;
   display: inherit;
   position: relative;
   margin: auto;
