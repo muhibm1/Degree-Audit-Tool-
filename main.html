@@ -86,49 +86,55 @@
     <!--  * Other Requirements Manual Entry -->
     <div class="formTwo" id="formTwo">
       <button class="previous_button" onclick="backToFormOne()">Back</button>
-      <div class="input-group" style="width: 30%;">
+      <div class="input-group" style="width: auto; padding: 10px; background-color: rgba(114, 110, 110, 0.336); border-radius: 10px;">
         <label for="n">Thesis</label>
         <input type="checkbox" id="thesis_input">
+        <label for="n">Fast Track</label>
+        <input type="checkbox" id="fasttrack_input">
       </div>
-      <div class="input-group">
-        <label for="n">Student-Completed Level Courses</label>
-        <label for="n">Degree Track Level Courses</label>
-      </div>
-      <div class="input-group">
-        <div class="drag_drop_container" id="student_level_container">
+      <div style="padding: 10px; background-color: rgba(114, 110, 110, 0.336); border-radius: 10px;">
+        <div class="input-group" style="padding-right: 20px;">
+          <label for="n">Student-Completed Level Courses</label>
+          <label for="n">Degree Track Level Courses</label>
         </div>
-        <div class="drag_drop_container" id="degree_level_container">
-        </div>
-      </div>
-      <div class="input-group">
-        <label for="n">Student-Completed Required Core Courses</label>
-        <label for="n">Degree Track Required Core Courses</label>
-      </div>
-      <div class="input-group">
-        <div class="drag_drop_container" id="student_required_container">
-        </div>
-        <div class="drag_drop_container" id="degree_required_container">
+        <div class="input-group">
+          <div class="drag_drop_container" id="student_level_container"></div>
+          <div class="drag_drop_container" id="degree_level_container"></div>
         </div>
       </div>
-      <div class="input-group">
-        <label for="--">Elective Courses Taken</label>
+      <div style="padding: 10px; background-color: rgba(114, 110, 110, 0.336); border-radius: 10px; margin-top: 10px;">
+        <div class="input-group">
+          <label for="n">Student-Completed Required Core Courses</label>
+          <label for="n">Degree Track Required Core Courses</label>
+        </div>
+        <div class="input-group">
+          <div class="drag_drop_container" id="student_required_container">
+          </div>
+          <div class="drag_drop_container" id="degree_required_container">
+          </div>
+        </div>
       </div>
-      <div class="input-group">
-        <label for="--" style="font-size:10px; color:rgb(216, 216, 216);">Press 'Enter' to add another course to the list</label>
-      </div>
-      <div class="manual_entry_container" id="elective_entry">
-        <input type="text" placeholder="CSXXXX" id="elective_courseEntry" class="courseEntry" autocomplete="off" 
-        onkeydown="entryKeyPress(event, document.getElementById('elective_entry'), this);">
-      </div>
-      <div class="input-group">
-        <label for="--">Other Courses Taken</label>
-      </div>
-      <div class="input-group">
-        <label for="--" style="font-size:10px; color:rgb(216, 216, 216);">Press 'Enter' to add another course to the list</label>
-      </div>
-      <div class="manual_entry_container" id="other_entry">
-        <input type="text" placeholder="CSXXXX" id="other_courseEntry" class="courseEntry" autocomplete="off"
-        onkeydown="entryKeyPress(event, document.getElementById('other_entry'), this);">
+      <div style="padding: 10px; background-color: rgba(114, 110, 110, 0.336); border-radius: 10px; margin-top: 10px;">
+        <div class="input-group">
+          <label for="--">Elective Courses Taken</label>
+        </div>
+        <div class="input-group">
+          <label for="--" style="font-size:10px; color:rgb(216, 216, 216);">Press 'Enter' to add another course to the list</label>
+        </div>
+        <div class="manual_entry_container" id="elective_entry">
+          <input type="text" placeholder="CSXXXX" id="elective_courseEntry" class="courseEntry" autocomplete="off" 
+          onkeydown="entryKeyPress(event, document.getElementById('elective_entry'), this);">
+        </div>
+        <div class="input-group">
+          <label for="--">Other Courses Taken</label>
+        </div>
+        <div class="input-group">
+          <label for="--" style="font-size:10px; color:rgb(216, 216, 216);">Press 'Enter' to add another course to the list</label>
+        </div>
+        <div class="manual_entry_container" id="other_entry">
+          <input type="text" placeholder="CSXXXX" id="other_courseEntry" class="courseEntry" autocomplete="off"
+          onkeydown="entryKeyPress(event, document.getElementById('other_entry'), this);">
+        </div>
       </div>
       <br>
       <button class="next_button" onclick="toFormThree()">Next</button>

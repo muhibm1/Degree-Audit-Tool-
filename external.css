@@ -279,6 +279,7 @@ nav {
 #form3-table {
   margin: auto;
   width: 100%;
+  padding: 3px;
 }
 
 th, td {
@@ -365,11 +366,15 @@ th, td {
   background-color: white;
   border: #e87500 solid 2px;
   border-radius: 2px;
-  margin: 2px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  text-align: center;
+  transition-duration: 0.2s;
 }
 
 .drag_item:hover {
   cursor: move;
+  background-color: rgb(230, 230, 230);
 }
 
 .courseEntry {
@@ -381,6 +386,7 @@ th, td {
   color: #333;
   font-size: 20px;
   margin: 3px;
+  padding: 4px;
 }
 
 .manual_entry_container{

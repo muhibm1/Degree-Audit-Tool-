@@ -150,6 +150,8 @@ function entryKeyPress(event, parent, input){
 // It performs the transition to form 3.
 function toFormThree() {
     document.getElementById("formTwo").style.display = "none";
+    student.setThesis(document.getElementById("thesis_input").checked);
+    student.setFastTrack(document.getElementById("fasttrack_input").checked);
     for (const node of document.getElementById("student_level_container").children){
         var courseID = node.innerHTML;
         if(!student.getLevelCoursesTaken().includes(courseID)){

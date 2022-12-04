@@ -20,6 +20,7 @@ class Student {
         this.elective_grades = []; //List of floating-point decimals
         this.elective_attributes = []; //List of Integers
         this.thesis = false; 
+        this.fasttrack = false;
         this.total_GPA = 0.000;
         this.core_GPA = 0.000;
         this.elective_GPA = 0.000;
@@ -45,6 +46,7 @@ class Student {
     getElectiveCourseGrades(){ return this.elective_grades; }
     getElectiveCourseAttributes(){ return this.elective_attributes; }
     getThesis(){ return this.thesis; }
+    getFastTrack(){ return this.fasttrack; }
     getTotalGPA(){ return this.total_GPA; }
     getCoreGPA(){ return this.core_GPA; }
     getElectiveGPA(){ return this.elective_GPA; }
@@ -69,6 +71,7 @@ class Student {
     addCoreCourseGrade(grade){ this.core_grades.push(grade); }
     addCoreCourseAttribute(att){ this.core_attributes.push(att); }
     setThesis(bool){ this.thesis = bool; }
+    setFastTrack(bool){ this.fasttrack = bool; }
     setTotalGPA(gpa){ this.total_GPA = gpa; }
     setCoreGPA(gpa){ this.core_GPA = gpa; }
     setElectiveGPA(gpa){ this.elective_GPA = gpa; }
