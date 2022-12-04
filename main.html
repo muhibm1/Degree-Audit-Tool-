@@ -20,7 +20,7 @@
 <script src="draganddrop.js"></script>
 </head>
 
-<body style="background-color:Gainsboro;">
+<body style="background-color:rgb(95, 148, 101); background-image: url('utdallas_min.jpg');">
   <div id="main-body">
     <!--DOCUMENT HEADER-->
     <header>
@@ -71,7 +71,7 @@
         <input id="fileupload" type="file" autocomplete="off">
       </div> 
       <div class="input-group">
-        <h2 id="transcript_status"></h2>
+        <h2 id="transcript_status" style="color: white; text-shadow: 1px 1px rgb(199, 101, 22);"></h2>
       </div>   
       <br>
       <button class="next_button" onclick="toFormTwo()">Next</button>
@@ -114,7 +114,7 @@
         <label for="--">Elective Courses Taken</label>
       </div>
       <div class="input-group">
-        <label for="--" style="font-size:10px; color:gray;">Press 'Enter' to add another course to the list</label>
+        <label for="--" style="font-size:10px; color:rgb(216, 216, 216);">Press 'Enter' to add another course to the list</label>
       </div>
       <div class="manual_entry_container" id="elective_entry">
         <input type="text" placeholder="CSXXXX" id="elective_courseEntry" class="courseEntry" autocomplete="off" 
@@ -124,7 +124,7 @@
         <label for="--">Other Courses Taken</label>
       </div>
       <div class="input-group">
-        <label for="--" style="font-size:10px; color:gray;">Press 'Enter' to add another course to the list</label>
+        <label for="--" style="font-size:10px; color:rgb(216, 216, 216);">Press 'Enter' to add another course to the list</label>
       </div>
       <div class="manual_entry_container" id="other_entry">
         <input type="text" placeholder="CSXXXX" id="other_courseEntry" class="courseEntry" autocomplete="off"
@@ -152,6 +152,9 @@
             <th>Semester Taken</th>
           </tr>
         </table>
+      </div>
+      <div class="input-group">
+        <label for="--" style="font-size:12px; color:rgb(216, 216, 216);">* Be sure all student information is correct before submitting.</label>
       </div>
       <button class="next_button"  onclick="submitStudentInfo()">Submit</button>
     </div>

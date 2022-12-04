@@ -161,6 +161,7 @@ function toFormThree() {
             student.addCourseTaken(courseID);
             student.addCourseGrade(4.000);
             student.addCourseAttribute(0);
+            student.addCourseSemester(student.getAdmittedSemester());
         }
     }
     for (const node of document.getElementById("student_required_container").children){
@@ -174,6 +175,7 @@ function toFormThree() {
             student.addCourseTaken(courseID);
             student.addCourseGrade(4.000);
             student.addCourseAttribute(0);
+            student.addCourseSemester(student.getAdmittedSemester());
         }
     }
     for (const node of document.getElementById("elective_entry").children){
@@ -188,6 +190,7 @@ function toFormThree() {
                 student.addCourseTaken(courseID);
                 student.addCourseGrade(4.000);
                 student.addCourseAttribute(0);
+                student.addCourseSemester(student.getAdmittedSemester());
             }
         }
     }
@@ -198,6 +201,7 @@ function toFormThree() {
                 student.addCourseTaken(courseID);
                 student.addCourseGrade(4.000);
                 student.addCourseAttribute(0);
+                student.addCourseSemester(student.getAdmittedSemester());
             }
         }
     }
@@ -416,6 +420,7 @@ function performCalculations() {
 // --generatePDFs():--
 // This function calls the PDFGenerator functions to create PDFs from student information.
 function generatePDFs() {
+    console.log(student);
     degreePlanPDF = degree_gen.degreePlan_generatePDF(student);
     auditReportPDF = audit_gen.audit_generatePDF(student, gpa_calc);
 }
@@ -458,7 +463,7 @@ function postDB_pageUpdate() {
     falloption.value = "Fall";
     var springoption = document.createElement("option");
     springoption.innerHTML = "Spring";
-    springoption.value = "Sprint";
+    springoption.value = "Spring";
     var summeroption = document.createElement("option");
     summeroption.innerHTML = "Summer";
     summeroption.value = "Summer";
@@ -538,7 +543,6 @@ document.getElementById("fileupload").addEventListener("change", function(event)
         document.getElementById("admit_y").value=student.getAdmittedSemester().substring(0,4);
         document.getElementById("admit_s").value=student.getAdmittedSemester().substring(4);
         document.getElementById("transcript_status").innerHTML = "Transcript Uploaded. Please check over all student information to ensure accuracy."
-        document.getElementById("transcript_status").style.color = "red";
         document.getElementById("transcript_status").style.fontSize = "20px";
         hideLoading();
     }
