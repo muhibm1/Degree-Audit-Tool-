@@ -37,8 +37,25 @@ function populateFormTwo(){
     document.getElementById("student_required_container").innerHTML = "";
     document.getElementById("degree_level_container").innerHTML = "";
     document.getElementById("degree_required_container").innerHTML = "";
-    document.getElementById("elective_entry").innerHTML = '<input type="text" placeholder="CSXXXX" id="elective_courseEntry" class="courseEntry" autocomplete="off"onkeydown="entryKeyPress(event, document.getElementById("elective_entry"), this);">';
-    document.getElementById("other_entry").innerHTML = '<input type="text" placeholder="CSXXXX" id="other_courseEntry" class="courseEntry" autocomplete="off"onkeydown="entryKeyPress(event, document.getElementById("other_entry"), this);">';
+    document.getElementById('elective_entry').innerHTML = "";
+    var newInput = document.createElement("input");
+    newInput.type = "text";
+    newInput.placeholder = "CSXXXX";
+    newInput.id = "elective_courseEntry";
+    newInput.className = "courseEntry";
+    newInput.autocomplete = "off";
+    newInput.addEventListener("keydown", function(event){ entryKeyPress(event, document.getElementById('elective_entry'), newInput); });
+    document.getElementById('elective_entry').appendChild(newInput);
+
+    document.getElementById('other_entry').innerHTML = "";
+    var newInput = document.createElement("input");
+    newInput.type = "text";
+    newInput.placeholder = "CSXXXX";
+    newInput.id = "other_courseEntry";
+    newInput.className = "courseEntry";
+    newInput.autocomplete = "off";
+    newInput.addEventListener("keydown", function(event){ entryKeyPress(event, document.getElementById('other_entry'), newInput); });
+    document.getElementById('other_entry').appendChild(newInput);
     let degree = db_handler.getDegreeTracks()[student.getDegreeTrackID()-1];
     let level_courses = degree['level_courses'];
     let core_courses = degree['req_courses'];
@@ -105,7 +122,6 @@ function populateFormTwo(){
     }
     event.preventDefault();
 }
-
 function add_drag_evt(p){
     p.addEventListener('dragstart', function(){
         p.classList.add('dragging');
@@ -423,8 +439,8 @@ function performCalculations() {
 // This function calls the PDFGenerator functions to create PDFs from student information.
 function generatePDFs() {
     console.log(student);
-    degreePlanPDF = degree_gen.degreePlan_generatePDF(student);
-    auditReportPDF = audit_gen.audit_generatePDF(student, gpa_calc);
+    degreePlanPDF = degree_gen.degreePlan_generatePDF(student, db_handler);
+    auditReportPDF = audit_gen.audit_generatePDF(student, gpa_calc,db_handler );
 }
 
 // --postDB_pageUpdate():--
