@@ -14,6 +14,7 @@ class Audit_Report{
         var plan = "Master";
         var major = "Computer Science";
         var track = student.getDegreeTrackID();
+        var trackname = db_handler.getDegreeTracks()[track - 1]['name'];
         var coreGPA = student.getCoreGPA(); ;
         var electiveGPA = student.getElectiveGPA() ;
         var totalGPA = student.getTotalGPA();
@@ -59,7 +60,7 @@ class Audit_Report{
     
             doc.setFont('Calibri(Body)', 'normal')
             .setFontSize(12)
-            .text(5.5, 2.0, "Track: " + track);
+            .text(5.5, 2.0, "Track: " + trackname);
     
             doc.setFont('Calibri(Body)', 'normal')
             .setFontSize(12)
